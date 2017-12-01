@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XADREZ</string>
+    <string name="newGame">Novo Jogo</string>
+    <string name="loadGame">Carregar Jogo</string>
+    <string name="notDoneYet">Ainda não implmentado</string>
+</resources>
