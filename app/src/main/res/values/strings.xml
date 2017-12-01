@@ -2,5 +2,5 @@
     <string name="app_name">CHESS</string>
     <string name="newGame">New Game</string>
     <string name="loadGame">Load Game</string>
-    <string name="notDoneYet">Not done yet</string>
+    <string name="notDoneYet">Not done yet!!!</string>
 </resources>
