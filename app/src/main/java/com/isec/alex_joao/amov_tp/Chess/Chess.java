@@ -10,10 +10,10 @@ public class Chess {
 
     public Chess() {
         players = new Player[2];
-        players[0] = new Player();
-        players[1] = new Player();
+        players[0] = new Player(0);
+        players[1] = new Player(1);
         board = new Board(new CoordV2(8, 8));
-
+        initBoard();
     }
 
     public void initBoard() {
@@ -76,4 +76,7 @@ public class Chess {
     }
 
 
+    public Board getBoard() {
+        return board;
+    }
 }

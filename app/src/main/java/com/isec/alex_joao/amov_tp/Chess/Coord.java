@@ -49,4 +49,6 @@ public class Coord {
     public int getLetAsInd() {
         return letter - 'A';
     }
+
+
 }

@@ -28,4 +28,16 @@ public class Rook extends Piece {
 
         return mat;
     }
+
+    @Override
+    public String getUnicodoString() {
+        String str;
+        if (player.getId() == 0)
+            str = "\u2656";
+        else if (player.getId() == 1)
+            str = "\u265C";
+        else
+            str = super.getUnicodoString();
+        return str;
+    }
 }

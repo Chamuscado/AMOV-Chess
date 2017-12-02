@@ -12,4 +12,16 @@ public class Bishop extends Piece {
     public String toString() {
         return "B";
     }
+
+    @Override
+    public String getUnicodoString() {
+        String str;
+        if (player.getId() == 0)
+            str = "\u2657";
+        else if (player.getId() == 1)
+            str = "\u265D";
+        else
+            str = super.getUnicodoString();
+        return str;
+    }
 }

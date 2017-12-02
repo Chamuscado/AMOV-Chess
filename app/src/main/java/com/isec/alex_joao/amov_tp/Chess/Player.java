@@ -6,9 +6,15 @@ import java.util.ArrayList;
 
 public class Player {
     ArrayList<Piece> pieces;
+    int id;
 
-    public Player() {
+    public Player(int id) {
+        this.id = id;
         pieces = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void addPiece(Piece piece) {

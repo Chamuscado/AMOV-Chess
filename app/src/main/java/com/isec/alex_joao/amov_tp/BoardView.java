@@ -2,25 +2,32 @@ package com.isec.alex_joao.amov_tp;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.isec.alex_joao.amov_tp.Chess.Chess;
+import com.isec.alex_joao.amov_tp.Chess.CoordV2;
+import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
 
 /**
  * Created by Chamuscado on 02/12/2017.
  */
 
 public class BoardView extends View {
-    int cor0, cor1;
+    int[] corSquare;
     Paint boardPaint;
     Paint textPaint;
 
-    public BoardView(Context context, int cor0, int cor1) {
+    public BoardView(Context context) {
         super(context);
-        this.cor0 = cor0;
-        this.cor1 = cor1;
+        corSquare = new int[2];
+        corSquare[0] = getResources().getColor(R.color.Square0);
+        corSquare[1] = getResources().getColor(R.color.Square1);
+
         boardPaint = new Paint();
-        boardPaint = new Paint();
+        textPaint = new Paint();
 
     }
 
@@ -33,64 +40,55 @@ public class BoardView extends View {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 
-
+        Chess chess = new Chess();
         //-----------------------
 
         int max = 8;
-        float cellWidth = canvas.getWidth() / (float) max;
-        Coord c;
+        float cellSize = canvas.getWidth() / (float) max;
+        float textSize = cellSize;
+        CoordV2 c;
         Piece p;
-        textPaint.setTextSize(cellWidth);
-        float textOffset = 0.15f * cellWidth;
+        textPaint.setTextSize(textSize);
+        float textOffset = 0.15f * cellSize;
         boardPaint.reset();
         for (int x = 0; x < max; x++) {
             for (int y = 0; y < max; y++) {
-                c = new Coordinate(x, y);
+                c = new CoordV2(x, y);
                 if (c.isValid()) {
-                    if ((x + y) % 2 == 0) boardPaint.setColor(Color.GRAY);
-                    else boardPaint.setColor(Color.DKGRAY);
-                    drawCoordinate(c, canvas, cellWidth, boardPaint, max);
-                    if (isInEditMode()) continue;
-                    p = Board.getPiece(c);
+                    boardPaint.setColor(corSquare[(x + y) % 2]);
+
+                    drawCoordinate(c, canvas, cellSize, boardPaint, max);
+                    // if (isInEditMode()) continue;
+                    p = chess.getBoard().getPieceAt(x, y);          //verificar cordenadas
                     if (p != null) {
-                        textPaint.setColor(Game.getPlayerColor(p.getPlayerId()));
-                        canvas.drawText(p.getString(), x * cellWidth,
-                                (max - y) * cellWidth - textOffset, textPaint);
+                        textPaint.setColor(Color.BLACK);
+                        canvas.drawText(p.getUnicodoString(), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+
                     }
                 }
             }
         }
-        if (selection != null && (p = Board.getPiece(selection)) != null) {
+        /*if (selection != null && (p = Board.getPiece(selection)) != null) {
             boardPaint.setAlpha(128);
             boardPaint.setColor(Color.CYAN);
-            canvas.drawCircle(selection.x * cellWidth + cellWidth / 2,
-                    (max - selection.y - 1) * cellWidth + cellWidth / 2, cellWidth / 2, boardPaint);
+            canvas.drawCircle(selection.x * cellSize + cellSize / 2,
+                    (max - selection.y - 1) * cellSize + cellSize / 2, cellSize / 2, boardPaint);
             textPaint.setColor(Game.getPlayerColor(p.getPlayerId()));
-            canvas.drawText(p.getString(), selection.x * cellWidth,
-                    (max - selection.y) * cellWidth - 10, textPaint);
+            canvas.drawText(p.getString(), selection.x * cellSize,
+                    (max - selection.y) * cellSize - 10, textPaint);
             for (Coordinate possible : p.getPossiblePositions()) {
-                drawCoordinate(possible, canvas, cellWidth, boardPaint, max);
+                drawCoordinate(possible, canvas, cellSize, boardPaint, max);
             }
-        }
+        }*/
         // print last moves
         boardPaint.setStyle(Paint.Style.STROKE);
         boardPaint.setStrokeWidth(5f);
-        for (Player player : Game.players) {
-            if (player.lastMove != null) {
-                boardPaint.setColor(player.color);
-                if (BuildConfig.DEBUG)
-                    Logger.log("draw lastMove: " + player.lastMove.first.toString() + " to " +
-                            player.lastMove.second.toString());
-                drawCoordinate(player.lastMove.first, canvas, cellWidth, boardPaint, max);
-                drawCoordinate(player.lastMove.second, canvas, cellWidth, boardPaint, max);
-            }
-        }
+
         //-----------------------
     }
 
-    private void drawCoordinate(final Coord c, final Canvas canvas, final float cellWidth, final Paint paint, int max) {
-        canvas.drawRect(c.x * cellWidth, (max - c.y - 1) * cellWidth, (c.x + 1) * cellWidth,
-                (max - c.y) * cellWidth, paint);
+    private void drawCoordinate(CoordV2 c, Canvas canvas, float cellSize, Paint paint, int max) {
+        canvas.drawRect(c.getX() * cellSize, (max - c.getY() - 1) * cellSize, (c.getX() + 1) * cellSize, (max - c.getY()) * cellSize, paint);
     }
 
     @Override

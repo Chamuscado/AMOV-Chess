@@ -13,4 +13,16 @@ public class Pawn extends Piece {
     public String toString() {
         return "P";
     }
+
+    @Override
+    public String getUnicodoString() {
+        String str;
+        if (player.getId() == 0)
+            str = "\u2659";
+        else if (player.getId() == 1)
+            str = "\u265F";
+        else
+            str = super.getUnicodoString();
+        return str;
+    }
 }

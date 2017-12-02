@@ -12,4 +12,16 @@ public class Knight extends Piece {
     public String toString() {
         return "k";
     }
+
+    @Override
+    public String getUnicodoString() {
+        String str;
+        if (player.getId() == 0)
+            str = "\u2658";
+        else if (player.getId() == 1)
+            str = "\u265E";
+        else
+            str = super.getUnicodoString();
+        return str;
+    }
 }

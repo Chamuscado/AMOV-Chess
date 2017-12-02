@@ -2,10 +2,10 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.*;
 
-public class Piece implements PieceInterface {
+public class Piece {
 
-    private Square square;
-    private Player player;
+    protected Square square;
+    protected Player player;
 
     public Piece(Player player) {
         this.player = player;
@@ -20,13 +20,16 @@ public class Piece implements PieceInterface {
         this.square = square;
     }
 
-    @Override
     public Player getPlayer() {
         return player;
     }
 
-    @Override
     public int[][] gerDesloc(Board board) {
         return new int[0][];
+    }
+
+    public String getUnicodoString()
+    {
+        return "\u2A09" + player.getId();
     }
 }
