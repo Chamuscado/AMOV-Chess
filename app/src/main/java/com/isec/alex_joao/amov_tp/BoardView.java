@@ -43,9 +43,10 @@ public class BoardView extends View {
         Chess chess = new Chess();
         //-----------------------
 
-        int max = 8;
+        int max = 10;
         float cellSize = canvas.getWidth() / (float) max;
         float textSize = cellSize;
+        float textSizeCoords = cellSize * (float) 0.8;
         CoordV2 c;
         Piece p;
         textPaint.setTextSize(textSize);
@@ -54,15 +55,26 @@ public class BoardView extends View {
         for (int x = 0; x < max; x++) {
             for (int y = 0; y < max; y++) {
                 c = new CoordV2(x, y);
+                if ((x == 0 || x == (max - 1)) && y != 0 && y != (max - 1)) {
+                    textPaint.setTextSize(textSizeCoords);
+                    textPaint.setColor(Color.BLACK);
+                    canvas.drawText(Integer.toString(max - y - 1), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+                    continue;
+                } else if ((y == 0 || y == (max - 1)) && x != 0 && x != (max - 1)) {
+                    textPaint.setTextSize(textSizeCoords);
+                    textPaint.setColor(Color.BLACK);
+                    canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+                    continue;
+                }
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
-
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
                     p = chess.getBoard().getPieceAt(x, y);          //verificar cordenadas
                     if (p != null) {
+                        textPaint.setTextSize(textSize);
                         textPaint.setColor(Color.BLACK);
-                        canvas.drawText(p.getUnicodoString(), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+                        canvas.drawText(p.getUnicodoString(), (x + 1) * cellSize + textOffset, (max - y - 1) * cellSize - textOffset, textPaint);
 
                     }
                 }
@@ -88,7 +100,7 @@ public class BoardView extends View {
     }
 
     private void drawCoordinate(CoordV2 c, Canvas canvas, float cellSize, Paint paint, int max) {
-        canvas.drawRect(c.getX() * cellSize, (max - c.getY() - 1) * cellSize, (c.getX() + 1) * cellSize, (max - c.getY()) * cellSize, paint);
+        canvas.drawRect((c.getX() + 1) * cellSize, (max - c.getY() - 2) * cellSize, (c.getX() + 2) * cellSize, (max - c.getY() - 1) * cellSize, paint);
     }
 
     @Override
