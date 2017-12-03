@@ -64,7 +64,7 @@ public class BoardView extends View {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
                     canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
-                    continue;
+
                 }
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
