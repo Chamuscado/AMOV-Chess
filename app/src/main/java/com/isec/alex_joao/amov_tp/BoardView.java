@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -72,7 +71,7 @@ public class BoardView extends View {
                         Square s = game.getSelected().getSquare();
                         if (s != null)
                             if (s.getPos().equals(c))
-                                boardPaint.setColor(Color.RED);
+                                boardPaint.setColor(getResources().getColor(R.color.SquareOfSelecedPiece));
                     }
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
