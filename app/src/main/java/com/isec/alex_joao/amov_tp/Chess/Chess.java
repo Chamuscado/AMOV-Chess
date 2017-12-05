@@ -1,10 +1,13 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
+import android.os.Parcelable;
+
 import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Chess {
+public class Chess implements Serializable {
     Player[] players;
     Board board;
 
@@ -38,9 +41,13 @@ public class Chess {
     }
 
     public void setSelected(CoordV2 pos) {
-
         board.setSelected(pos);
     }
+
+    public Piece getSelected() {
+        return board.getSelected();
+    }
+
 
     public void moveTo(Coord pos) {
         board.moveTo(pos);

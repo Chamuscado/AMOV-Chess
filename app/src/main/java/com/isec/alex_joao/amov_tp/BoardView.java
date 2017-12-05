@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
 import com.isec.alex_joao.amov_tp.Chess.CoordV2;
@@ -19,32 +21,27 @@ public class BoardView extends View {
     int[] corSquare;
     Paint boardPaint;
     Paint textPaint;
+    float cellSize;
+    Chess game;
 
-    public BoardView(Context context) {
+    public BoardView(Context context, Chess game) {
         super(context);
         corSquare = new int[2];
         corSquare[0] = getResources().getColor(R.color.Square0);
         corSquare[1] = getResources().getColor(R.color.Square1);
-
         boardPaint = new Paint();
         textPaint = new Paint();
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
+        cellSize = 0;
+        this.game = game;
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-
-        Chess chess = new Chess();
         //-----------------------
 
         int max = 10;
-        float cellSize = canvas.getWidth() / (float) max;
+        cellSize = canvas.getWidth() / (float) max;
         float textSize = cellSize;
         float textSizeCoords = cellSize * (float) 0.8;
         CoordV2 c;
@@ -59,7 +56,7 @@ public class BoardView extends View {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
                     canvas.drawText(Integer.toString(max - y - 1), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
-                    continue;
+
                 } else if ((y == 0 || y == (max - 1)) && x != 0 && x != (max - 1)) {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
@@ -68,9 +65,10 @@ public class BoardView extends View {
                 }
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
+                    if(game.getSelected().getSquare().getPos())
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
-                    p = chess.getBoard().getPieceAt(x, y);          //verificar cordenadas
+                    p = game.getBoard().getPieceAt(x, y);          //verificar cordenadas
                     if (p != null) {
                         textPaint.setTextSize(textSize);
                         textPaint.setColor(Color.BLACK);
@@ -108,5 +106,16 @@ public class BoardView extends View {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(Math.min(getMeasuredWidth(), getMeasuredHeight()),
                 Math.min(getMeasuredWidth(), getMeasuredHeight()));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (cellSize != 0) {
+            int x = (int) (event.getX() / cellSize);
+            int y = (int) (event.getY() / cellSize);
+            Toast.makeText(getContext(), "(" + x + "," + y + ")", Toast.LENGTH_SHORT).show();
+        } else
+            Toast.makeText(getContext(), "nao exite", Toast.LENGTH_SHORT).show();
+        return super.onTouchEvent(event);
     }
 }
