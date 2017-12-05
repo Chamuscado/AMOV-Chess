@@ -86,4 +86,8 @@ public class Chess implements Serializable {
     public Board getBoard() {
         return board;
     }
+
+    public boolean hasSelected() {
+        return board.getSelected() != null;
+    }
 }

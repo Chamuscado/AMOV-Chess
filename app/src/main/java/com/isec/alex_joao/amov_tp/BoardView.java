@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.isec.alex_joao.amov_tp.Chess.Chess;
 import com.isec.alex_joao.amov_tp.Chess.CoordV2;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
+import com.isec.alex_joao.amov_tp.Chess.Square;
 
 /**
  * Created by Chamuscado on 02/12/2017.
@@ -23,6 +24,7 @@ public class BoardView extends View {
     Paint textPaint;
     float cellSize;
     Chess game;
+    final static int max = 10;
 
     public BoardView(Context context, Chess game) {
         super(context);
@@ -40,7 +42,7 @@ public class BoardView extends View {
         super.draw(canvas);
         //-----------------------
 
-        int max = 10;
+
         cellSize = canvas.getWidth() / (float) max;
         float textSize = cellSize;
         float textSizeCoords = cellSize * (float) 0.8;
@@ -63,9 +65,15 @@ public class BoardView extends View {
                     canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
 
                 }
+
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
-                    if(game.getSelected().getSquare().getPos())
+                    if (game.hasSelected()) {
+                        Square s = game.getSelected().getSquare();
+                        if (s != null)
+                            if (s.getPos().equals(c))
+                                boardPaint.setColor(Color.RED);
+                    }
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
                     p = game.getBoard().getPieceAt(x, y);          //verificar cordenadas
@@ -113,7 +121,11 @@ public class BoardView extends View {
         if (cellSize != 0) {
             int x = (int) (event.getX() / cellSize);
             int y = (int) (event.getY() / cellSize);
-            Toast.makeText(getContext(), "(" + x + "," + y + ")", Toast.LENGTH_SHORT).show();
+            CoordV2 pos = new CoordV2(x - 1, max - y - 2);
+            if (pos.isValid()) {
+                game.setSelected(pos);
+                invalidate();
+            }
         } else
             Toast.makeText(getContext(), "nao exite", Toast.LENGTH_SHORT).show();
         return super.onTouchEvent(event);

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
+import com.isec.alex_joao.amov_tp.Chess.CoordV2;
 
 public class GameActivity extends Activity implements BoardFragment.OnFragmentInteractionListener {
     BoardFragment boardFragment;

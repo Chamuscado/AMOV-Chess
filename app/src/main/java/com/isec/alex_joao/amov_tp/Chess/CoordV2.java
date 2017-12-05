@@ -37,4 +37,12 @@ public class CoordV2 {
     public boolean isValid() {
         return X < minX || X > maxX || Y < minY || Y > maxY ? false : true;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CoordV2))
+            return false;
+        CoordV2 cord = (CoordV2) obj;
+        return X == cord.getX() && Y == cord.getY();
+    }
 }
