@@ -1,6 +1,8 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
-public class Coord {
+import java.io.Serializable;
+
+public class Coord implements Serializable {
     private Character letter;
     private Integer numb;
 

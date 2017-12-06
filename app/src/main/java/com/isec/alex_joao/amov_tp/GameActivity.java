@@ -20,7 +20,10 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        game = new Chess();
+        if (savedInstanceState != null)
+            game = (Chess) savedInstanceState.getSerializable("game");
+        if (game == null)
+            game = new Chess();
         boardFragment = BoardFragment.newInstance(game);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.BoardContainer, boardFragment);

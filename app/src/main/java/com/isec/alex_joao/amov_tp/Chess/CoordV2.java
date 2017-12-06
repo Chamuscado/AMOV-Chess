@@ -1,6 +1,8 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
-public class CoordV2 {
+import java.io.Serializable;
+
+public class CoordV2 implements Serializable {
     protected int X, Y;
 
     public int getX() {

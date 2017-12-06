@@ -2,7 +2,9 @@ package com.isec.alex_joao.amov_tp.Chess;
 
 import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 
-public class Square {
+import java.io.Serializable;
+
+public class Square implements Serializable {
     private int x, y;
     private Piece piece;
     private int color;
