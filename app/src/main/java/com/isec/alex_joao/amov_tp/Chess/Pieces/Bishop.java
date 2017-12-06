@@ -2,7 +2,9 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.Player;
 
-public class Bishop extends Piece {
+import java.io.Serializable;
+
+public class Bishop extends Piece implements Serializable{
 
     public Bishop(Player player) {
         super(player);

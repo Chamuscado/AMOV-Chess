@@ -5,7 +5,7 @@ import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
     private Square board[][];
     Piece selected;
 
@@ -19,15 +19,21 @@ public class Board implements Serializable{
     }
 
     public void setSelected(CoordV2 pos) {
-
-        selected = getPieceAt(pos.X, pos.Y);
+        Piece p = getPieceAt(pos.X, pos.Y);
+        if (p != null)                           //TODO -> verificar se a peça é do jogador
+            selected = p;
+        else {
+            moveTo(pos);
+        }
     }
 
     public void moveTo(Coord pos) {
+        moveTo(new CoordV2(pos));
+    }
+
+    public void moveTo(CoordV2 pos) {
         if (selected != null)
-            movePiece(selected.getSquare().getPos(), new CoordV2(pos));
-        else
-            System.out.println("Piece not selected!");
+            movePiece(selected.getSquare().getPos(), pos);
     }
 
     public void initBoard(Player[] players) {

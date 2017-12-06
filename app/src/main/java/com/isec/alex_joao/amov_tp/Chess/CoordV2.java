@@ -31,10 +31,10 @@ public class CoordV2 implements Serializable {
         X = cord.getNumbAsInd();
     }
 
-    static final int maxX = 7;
-    static final int maxY = 7;
-    static final int minX = 0;
-    static final int minY = 0;
+    public static final int maxX = 7;
+    public static final int maxY = 7;
+    public static final int minX = 0;
+    public static final int minY = 0;
 
     public boolean isValid() {
         return X < minX || X > maxX || Y < minY || Y > maxY ? false : true;

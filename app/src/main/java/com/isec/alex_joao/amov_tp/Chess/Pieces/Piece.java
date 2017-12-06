@@ -3,6 +3,7 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 import com.isec.alex_joao.amov_tp.Chess.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Piece implements Serializable{
 
@@ -26,8 +27,8 @@ public class Piece implements Serializable{
         return player;
     }
 
-    public int[][] gerDesloc(Board board) {
-        return new int[0][];
+    public List<CoordV2> gerDesloc(Board board) {
+        return null;
     }
 
     public String getUnicodoString()

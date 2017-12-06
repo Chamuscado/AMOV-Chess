@@ -2,7 +2,9 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.*;
 
-public class Pawn extends Piece {
+import java.io.Serializable;
+
+public class Pawn extends Piece implements Serializable {
 
 
     public Pawn(Player player) {

@@ -2,7 +2,9 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.*;
 
-public class King extends Piece {
+import java.io.Serializable;
+
+public class King extends Piece implements Serializable {
 
     public King(Player player) {
         super(player);

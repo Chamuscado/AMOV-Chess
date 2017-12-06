@@ -6,5 +6,5 @@
     <color name="startTitle">#000000</color>
     <color name="Square0">#786b6b</color>
     <color name="Square1">#FFFFFF</color>
-    <color name="SquareOfSelecedPiece">#000000</color>
+    <color name="SquareOfSelecedPiece">#ff0000</color>
 </resources>
