@@ -5,7 +5,7 @@ import com.isec.alex_joao.amov_tp.Chess.*;
 import java.io.Serializable;
 import java.util.List;
 
-public class Piece implements Serializable{
+public class Piece implements Serializable {
 
     protected Square square;
     protected Player player;
@@ -14,6 +14,25 @@ public class Piece implements Serializable{
         this.player = player;
     }
 
+    protected boolean addPieceList(Board board, List<CoordV2> list, CoordV2 pos) {
+        boolean resp = false;
+        if (pos.isValid()) {
+            Piece p = board.getPieceAt(pos);
+            if (p == null) {
+                list.add(pos);
+                resp = true;
+            } else {
+                if (p == this) {
+                    resp = true;
+                } else {
+                    Player player = p.getPlayer();
+                    if (!player.equals(this.player))
+                        list.add(pos);
+                }
+            }
+        }
+        return resp;
+    }
 
     public Square getSquare() {
         return square;
@@ -31,8 +50,7 @@ public class Piece implements Serializable{
         return null;
     }
 
-    public String getUnicodoString()
-    {
+    public String getUnicodoString() {
         return "\u2A09" + player.getId();
     }
 }

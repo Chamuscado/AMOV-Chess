@@ -22,50 +22,18 @@ public class Rook extends Piece implements Serializable {
         List<CoordV2> list = new ArrayList<>();
         CoordV2 pos = getSquare().getPos();
 
-        for (int i = pos.getX(); i <= CoordV2.maxX; ++i) {
-            CoordV2 aux = new CoordV2(i, pos.getY());
-            Piece p = board.getPieceAt(aux);
-            if (p == null)
-                list.add(aux);
-            else {
-                if (p.getPlayer().equals(player))
-                    list.add(aux);
-                break;
-            }
-        }
-        for (int i = pos.getY()+1; i <= CoordV2.maxY; ++i) {
-            CoordV2 aux = new CoordV2(pos.getX(), i);
-            Piece p = board.getPieceAt(aux);
-            if (p == null)
-                list.add(aux);
-            else {
-                if (p.getPlayer().equals(player))
-                    list.add(aux);
-                break;
-            }
-        }
-        for (int i = pos.getY()-11; i <= CoordV2.minY; --i) {
-            CoordV2 aux = new CoordV2(pos.getX(), i);
-            Piece p = board.getPieceAt(aux);
-            if (p == null)
-                list.add(aux);
-            else {
-                if (p.getPlayer().equals(player))
-                    list.add(aux);
-                break;
-            }
-        }
-        for (int i = pos.getX() - 1; i >= CoordV2.minX; --i) {
-            CoordV2 aux = new CoordV2(i, pos.getY());
-            Piece p = board.getPieceAt(aux);
-            if (p == null)
-                list.add(aux);
-            else {
-                if (p.getPlayer().equals(player))
-                    list.add(aux);
-                break;
-            }
-        }
+        for (int i = pos.getX(); addPieceList(board, list, new CoordV2(i, pos.getY())); ++i)
+            ; //maxX
+
+        for (int i = pos.getY(); addPieceList(board, list, new CoordV2(pos.getX(), i)); ++i)
+            ;//maxY
+
+        for (int i = pos.getY(); addPieceList(board, list, new CoordV2(pos.getX(), i)); --i)
+            ;  //min Y
+
+        for (int i = pos.getX(); addPieceList(board, list, new CoordV2(i, pos.getY())); --i)
+            ; //minX
+
         return list;
     }
 

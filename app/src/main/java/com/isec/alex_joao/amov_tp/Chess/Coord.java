@@ -2,6 +2,7 @@ package com.isec.alex_joao.amov_tp.Chess;
 
 import java.io.Serializable;
 
+@Deprecated
 public class Coord implements Serializable {
     private Character letter;
     private Integer numb;

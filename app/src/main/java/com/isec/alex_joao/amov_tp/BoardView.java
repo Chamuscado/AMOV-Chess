@@ -9,9 +9,12 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
+import com.isec.alex_joao.amov_tp.Chess.Coord;
 import com.isec.alex_joao.amov_tp.Chess.CoordV2;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
 import com.isec.alex_joao.amov_tp.Chess.Square;
+
+import java.util.List;
 
 /**
  * Created by Chamuscado on 02/12/2017.
@@ -50,6 +53,14 @@ public class BoardView extends View {
         textPaint.setTextSize(textSize);
         float textOffset = 0.15f * cellSize;
         boardPaint.reset();
+        Square s = null;
+        List<CoordV2> posPos = null;
+        if (game.hasSelected()) {
+            s = game.getSelected().getSquare();
+            if (s != null)
+                posPos = s.getPiece().gerDesloc(game.getBoard());
+        }
+
         for (int x = 0; x < max; x++) {
             for (int y = 0; y < max; y++) {
                 c = new CoordV2(x, y);
@@ -62,17 +73,19 @@ public class BoardView extends View {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
                     canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
-
                 }
-
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
-                    if (game.hasSelected()) {
-                        Square s = game.getSelected().getSquare();
                         if (s != null)
-                            if (s.getPos().equals(c))
+                            if (s.getPos().equals(c)) {
                                 boardPaint.setColor(getResources().getColor(R.color.SquareOfSelecedPiece));
-                    }
+                            }
+                        if (posPos != null) {
+                            if (posPos.contains(c)) {
+                                boardPaint.setColor(getResources().getColor(R.color.SquareOfSelecedPiece));
+                            }
+                        }
+
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
                     p = game.getBoard().getPieceAt(x, y);          //verificar cordenadas

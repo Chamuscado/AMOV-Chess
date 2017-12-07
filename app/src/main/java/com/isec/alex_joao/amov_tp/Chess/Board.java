@@ -4,6 +4,7 @@ import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Board implements Serializable {
     private Square board[][];
@@ -68,14 +69,8 @@ public class Board implements Serializable {
         if (!board[pos1.X][pos1.Y].hasPiece())
             return;
         Piece piece = board[pos1.X][pos1.Y].removePiece();
-        int[][] mat = piece.gerDesloc(this);
+        List<CoordV2> mat = piece.gerDesloc(this);
 
-        for (int[] i : mat) {
-            System.out.println();
-            for (int j : i) {
-                System.out.print("  " + j);
-            }
-        }
 
 
         board[pos2.X][pos2.Y].setPiece(piece);
