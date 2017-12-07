@@ -50,8 +50,14 @@ public class Chess implements Serializable {
     }
 
     public void setSelected(CoordV2 pos) {
-        board.setSelected(pos);
+        int i = board.setSelected(pos, jogadorAtual);
+        if(i == 1)
+        {
+            nextPlayer();
+            board.removeSelected();
+        }
     }
+
 
     public Piece getSelected() {
         return board.getSelected();

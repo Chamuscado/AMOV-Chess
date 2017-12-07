@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Board implements Serializable {
     private Square board[][];
-    Piece selected;
+    private Piece selected;
 
 
     public Board(CoordV2 size) {
@@ -19,13 +19,30 @@ public class Board implements Serializable {
         selected = null;
     }
 
-    public void setSelected(CoordV2 pos) {
+    public int setSelected(CoordV2 pos, Player player) {            //TODO -> este metodo está todo fodido
+        int resp = 0;
         Piece p = getPieceAt(pos.X, pos.Y);
         if (p != null)                           //TODO -> verificar se a peça é do jogador
-            selected = p;
-        else {
+        {
+            Player player2 = p.getPlayer();
+            if (player2 == player) {                   //muda a peça selecionada
+                selected = p;
+            } else {                                  //comer a peça
+                player2.removePiece(p);
+                board[pos.X][pos.Y].removePiece();
+                moveTo(pos);
+                resp = 1;
+            }
+
+        } else {
             moveTo(pos);
+            resp = 1;
         }
+        return resp;
+    }
+
+    public void removeSelected() {
+        selected = null;
     }
 
     public void moveTo(Coord pos) {
@@ -70,7 +87,6 @@ public class Board implements Serializable {
             return;
         Piece piece = board[pos1.X][pos1.Y].removePiece();
         List<CoordV2> mat = piece.gerDesloc(this);
-
 
 
         board[pos2.X][pos2.Y].setPiece(piece);

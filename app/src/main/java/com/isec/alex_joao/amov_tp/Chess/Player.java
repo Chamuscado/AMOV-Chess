@@ -25,4 +25,8 @@ public class Player implements Serializable {
     public ArrayList<Piece> getPieces() {
         return pieces;
     }
+
+    public void removePiece(Piece p) {
+        pieces.remove(p);
+    }
 }
