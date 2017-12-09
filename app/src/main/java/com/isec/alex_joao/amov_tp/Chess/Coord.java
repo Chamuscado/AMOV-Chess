@@ -31,6 +31,11 @@ public class Coord implements Serializable {
     public static final int minX = 0;
     public static final int minY = 0;
 
+    @Override
+    public String toString() {
+        return "(" + X + "," + Y + ")";
+    }
+
     public boolean isValid() {
         return X < minX || X > maxX || Y < minY || Y > maxY ? false : true;
     }

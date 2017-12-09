@@ -12,8 +12,8 @@ public class Chess implements Serializable {
 
     public Chess() {
         players = new Player[2];
-        jogadorAtual = players[0] = new Player(0,new Coord(0,0));
-        players[1] = new Player(1,new Coord(0,0)); // TODO->corrigir direcao
+        jogadorAtual = players[0] = new Player(0, new Coord(0, 0));
+        players[1] = new Player(1, new Coord(0, 0)); // TODO->corrigir direcao
         board = new Board(new Coord(8, 8));
         initBoard();
     }
@@ -23,8 +23,13 @@ public class Chess implements Serializable {
             players[j].addPiece(new Rook(players[j]));
             players[j].addPiece(new Knight(players[j]));
             players[j].addPiece(new Bishop(players[j]));
-            players[j].addPiece(new Queen(players[j]));
-            players[j].addPiece(new King(players[j]));
+            if (j == 0) {
+                players[j].addPiece(new Queen(players[j]));
+                players[j].addPiece(new King(players[j]));
+            }else if (j == 1) {
+                players[j].addPiece(new King(players[j]));
+                players[j].addPiece(new Queen(players[j]));
+            }
             players[j].addPiece(new Bishop(players[j]));
             players[j].addPiece(new Knight(players[j]));
             players[j].addPiece(new Rook(players[j]));

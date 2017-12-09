@@ -39,7 +39,7 @@ public class BoardView extends View {
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas) {               // TODO -> é preciso refazer todo o método
         super.draw(canvas);
 
         cellSize = canvas.getWidth() / (float) max;
@@ -48,7 +48,8 @@ public class BoardView extends View {
         Coord c;
         Piece p;
         textPaint.setTextSize(textSize);
-        float textOffset = 0.15f * cellSize;
+        float PiecesOffset = 0.15f * cellSize;
+        float TextOffset = 0.30f * cellSize;
         boardPaint.reset();
         Square s = null;
         List<Coord> posPos = null;
@@ -58,18 +59,19 @@ public class BoardView extends View {
                 posPos = s.getPiece().gerDesloc(game.getBoard());
         }
 
-        for (int x = 0; x < max; x++) {
-            for (int y = 0; y < max; y++) {
+        for (int x = 0; x < max; ++x) {
+            for (int y = 0; y < max; ++y) {
                 c = new Coord(x, y);
                 if ((x == 0 || x == (max - 1)) && y != 0 && y != (max - 1)) {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
-                    canvas.drawText(Integer.toString(max - y - 1), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+
+                    canvas.drawText(Integer.toString(max - y - 1), x * cellSize + TextOffset, (y + 1) * cellSize - PiecesOffset, textPaint);
 
                 } else if ((y == 0 || y == (max - 1)) && x != 0 && x != (max - 1)) {
                     textPaint.setTextSize(textSizeCoords);
                     textPaint.setColor(Color.BLACK);
-                    canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + textOffset, (max - y) * cellSize - textOffset, textPaint);
+                    canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + TextOffset, (y + 1) * cellSize - PiecesOffset, textPaint);
                 }
                 if (c.isValid()) {
                     boardPaint.setColor(corSquare[(x + y) % 2]);
@@ -86,12 +88,15 @@ public class BoardView extends View {
 
                     drawCoordinate(c, canvas, cellSize, boardPaint, max);
                     // if (isInEditMode()) continue;
-                    p = game.getBoard().getPieceAt(x, y);          //verificar cordenadas
+                    p = game.getBoard().getPieceAt(x, max - y - 3);          //verificar cordenadas
                     if (p != null) {
                         textPaint.setTextSize(textSize);
                         textPaint.setColor(Color.BLACK);
-                        canvas.drawText(p.getUnicodoString(), (x + 1) * cellSize + textOffset, (max - y - 1) * cellSize - textOffset, textPaint);
+                        canvas.drawText(p.getUnicodoString(), (x + 1) * cellSize + PiecesOffset, (max - y - 1) * cellSize - PiecesOffset, textPaint);
 
+                    } else {
+                        textPaint.setTextSize(textSize / 2);
+                        canvas.drawText(c.toString(), (x + 1) * cellSize, (max - y - 1) * cellSize - PiecesOffset, textPaint);
                     }
                 }
             }
@@ -99,7 +104,7 @@ public class BoardView extends View {
     }
 
     private void drawCoordinate(Coord c, Canvas canvas, float cellSize, Paint paint, int max) {
-        canvas.drawRect((c.getX() + 1) * cellSize, (max - c.getY() - 2) * cellSize, (c.getX() + 2) * cellSize, (max - c.getY() - 1) * cellSize, paint);
+        canvas.drawRect((c.getX() + 1) * cellSize, (c.getY() + 1) * cellSize, (c.getX() + 2) * cellSize, (c.getY() + 2) * cellSize, paint);
     }
 
     @Override

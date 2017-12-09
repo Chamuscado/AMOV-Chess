@@ -21,10 +21,7 @@ public class Pawn extends Piece implements Serializable {
     @Override
     public List<Coord> gerDesloc(Board board) {
         List<Coord> list = new ArrayList<>();
-        for (int i = 0; i < 8; ++i)
-            for (int j = 0; j < 8; ++j)
-                list.add(new Coord(i, j));
-        list.remove(getSquare().getPos());
+
         return list;
     }
 
