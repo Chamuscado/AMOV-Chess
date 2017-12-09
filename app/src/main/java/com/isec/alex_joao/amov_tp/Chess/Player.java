@@ -8,10 +8,16 @@ import java.util.ArrayList;
 public class Player implements Serializable {
     ArrayList<Piece> pieces;
     int id;
+    private Coord dir;
 
-    public Player(int id) {
+    public Player(int id, Coord dir) {
         this.id = id;
         pieces = new ArrayList<>();
+        this.dir = dir;
+    }
+
+    public Coord getDir() {
+        return dir;
     }
 
     public int getId() {

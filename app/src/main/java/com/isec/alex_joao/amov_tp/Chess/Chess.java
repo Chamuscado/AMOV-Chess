@@ -1,22 +1,20 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
-import android.os.Parcelable;
-
 import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Chess implements Serializable {
     private Player[] players;
     private Board board;
     private Player jogadorAtual;
 
+
     public Chess() {
         players = new Player[2];
-        jogadorAtual = players[0] = new Player(0);
-        players[1] = new Player(1);
-        board = new Board(new CoordV2(8, 8));
+        jogadorAtual = players[0] = new Player(0,new Coord(0,0));
+        players[1] = new Player(1,new Coord(0,0)); // TODO->corrigir direcao
+        board = new Board(new Coord(8, 8));
         initBoard();
     }
 
@@ -41,20 +39,14 @@ public class Chess implements Serializable {
             jogadorAtual = players[1];
         else
             jogadorAtual = players[0];
+        board.removeSelected();
     }
 
-    @Deprecated
+
     public void setSelected(Coord pos) {
-
-        setSelected(new CoordV2(pos));
-    }
-
-    public void setSelected(CoordV2 pos) {
         int i = board.setSelected(pos, jogadorAtual);
-        if(i == 1)
-        {
+        if (i == Board.NEXTPLAYER) {
             nextPlayer();
-            board.removeSelected();
         }
     }
 
@@ -62,41 +54,6 @@ public class Chess implements Serializable {
     public Piece getSelected() {
         return board.getSelected();
     }
-
-    @Deprecated
-    public void moveTo(Coord pos) {
-        board.moveTo(pos);
-    }
-
-    private void move(CoordV2 pos1, CoordV2 pos2) {
-
-        board.movePiece(pos1, pos2);
-    }
-
-    /*
-        @Deprecated
-        public void move(Coord pos1, Coord pos2) {
-            move(new CoordV2(pos1), new CoordV2(pos2));
-
-        }
-
-        @Deprecated
-        public void move(String move) {
-            Coord start = new Coord();
-            Coord end = new Coord();
-
-            start.setLetter(move.charAt(1));
-            start.setNumb(move.charAt(2) - '0');
-            end.setLetter(move.charAt(4));
-            end.setNumb(move.charAt(5) - '0');
-
-            move(start, end);
-        }
-    */
-    public void printBoard() {
-        board.printBoard();
-    }
-
 
     public Board getBoard() {
         return board;

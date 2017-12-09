@@ -2,56 +2,44 @@ package com.isec.alex_joao.amov_tp.Chess;
 
 import java.io.Serializable;
 
-@Deprecated
 public class Coord implements Serializable {
-    private Character letter;
-    private Integer numb;
+    protected int X, Y;
 
-    public Coord() {
-        letter = null;
-        numb = null;
+    public int getX() {
+        return X;
     }
 
-    public Coord(Character letter, Integer numb) {
-        Character c = Character.toUpperCase(letter);
-        if (c < 'A' || c > 'H')
-            throw new IllegalArgumentException("<Chess.Coord> Letra invalida: " + letter);
-        else
-            this.letter = c;
-        if (numb < 1 || numb > 8)
-            throw new IllegalArgumentException("<Chess.Coord> Numero invalido: " + numb);
-        this.numb = numb;
+    public void setX(int x) {
+        X = x;
     }
 
-    public Character getLetter() {
-        return letter;
+    public int getY() {
+        return Y;
     }
 
-    public void setLetter(Character letter) {
-        Character c = Character.toUpperCase(letter);
-        if (c < 'A' || c > 'H')
-            throw new IllegalArgumentException("<Chess.Coord> Letra invalida: " + letter);
-        else
-            this.letter = c;
+    public void setY(int y) {
+        Y = y;
     }
 
-    public Integer getNumb() {
-        return numb;
+    public Coord(int x, int y) {
+        X = x;
+        Y = y;
     }
 
-    public void setNumb(Integer numb) {
-        if (numb < 1 || numb > 8)
-            throw new IllegalArgumentException("<Chess.Coord> Numero invalido: " + numb);
-        this.numb = numb;
+    public static final int maxX = 7;
+    public static final int maxY = 7;
+    public static final int minX = 0;
+    public static final int minY = 0;
+
+    public boolean isValid() {
+        return X < minX || X > maxX || Y < minY || Y > maxY ? false : true;
     }
 
-    public int getNumbAsInd() {
-        return numb - 1;
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Coord))
+            return false;
+        Coord cord = (Coord) obj;
+        return X == cord.getX() && Y == cord.getY();
     }
-
-    public int getLetAsInd() {
-        return letter - 'A';
-    }
-
-
 }

@@ -18,20 +18,19 @@ public class Rook extends Piece implements Serializable {
     }
 
     @Override
-    public List<CoordV2> gerDesloc(Board board) {
-        List<CoordV2> list = new ArrayList<>();
-        CoordV2 pos = getSquare().getPos();
+    public List<Coord> gerDesloc(Board board) {
+        List<Coord> list = new ArrayList<>();
+        Coord pos = getSquare().getPos();
+        int x = pos.getX();
+        int y = pos.getY();
 
-        for (int i = pos.getX(); addPieceList(board, list, new CoordV2(i, pos.getY())); ++i)
+        for (int i = x + 1; addPieceList(board, list, new Coord(i, y)); ++i)
             ; //maxX
-
-        for (int i = pos.getY(); addPieceList(board, list, new CoordV2(pos.getX(), i)); ++i)
+        for (int i = y + 1; addPieceList(board, list, new Coord(x, i)); ++i)
             ;//maxY
-
-        for (int i = pos.getY(); addPieceList(board, list, new CoordV2(pos.getX(), i)); --i)
+        for (int i = y - 1; addPieceList(board, list, new Coord(x, i)); --i)
             ;  //min Y
-
-        for (int i = pos.getX(); addPieceList(board, list, new CoordV2(i, pos.getY())); --i)
+        for (int i = x - 1; addPieceList(board, list, new Coord(i, y)); --i)
             ; //minX
 
         return list;

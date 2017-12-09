@@ -9,9 +9,10 @@ import java.util.List;
 public class Board implements Serializable {
     private Square board[][];
     private Piece selected;
+    protected static final int SAMEPLAYER = 0;
+    protected static final int NEXTPLAYER = 1;
 
-
-    public Board(CoordV2 size) {
+    public Board(Coord size) {
         board = new Square[size.X][size.Y];
         for (int i = 0; i < size.X; ++i)
             for (int j = 0; j < size.X; ++j)
@@ -19,25 +20,40 @@ public class Board implements Serializable {
         selected = null;
     }
 
-    public int setSelected(CoordV2 pos, Player player) {            //TODO -> este metodo está todo fodido
-        int resp = 0;
-        Piece p = getPieceAt(pos.X, pos.Y);
-        if (p != null)                           //TODO -> verificar se a peça é do jogador
+    public int setSelected(Coord pos, Player player) {            //TODO -> este metodo está todo fodido
+        int resp = SAMEPLAYER;
+        Piece p;
+        List<Coord> list = null;
+        try {
+            p = getPieceAt(pos.X, pos.Y);
+        } catch (IllegalArgumentException ex) {
+            p = null;
+        }
+        if (selected != null)
+            list = selected.gerDesloc(this);
+
+        if (p != null)                                            //TODO -> verificar se a peça é do jogador
         {
             Player player2 = p.getPlayer();
-            if (player2 == player) {                   //muda a peça selecionada
+            if (player2 == player) {                   //muda   a peça selecionada
                 selected = p;
-            } else {                                  //comer a peça
-                player2.removePiece(p);
-                board[pos.X][pos.Y].removePiece();
-                moveTo(pos);
-                resp = 1;
-            }
+            } else if (list != null)
+                if (list.contains(pos)) {                           //verifica se é uma jogada valida
+                    player2.removePiece(p);                         //comer a peça
+                    board[pos.X][pos.Y].removePiece();
+                    moveTo(pos);
+                    resp = NEXTPLAYER;
+                }
 
-        } else {
-            moveTo(pos);
-            resp = 1;
+        } else { // movimento simples ( sem comer)
+
+            if (list != null)
+                if (list.contains(pos)) {
+                    moveTo(pos);
+                    resp = NEXTPLAYER;
+                }
         }
+
         return resp;
     }
 
@@ -45,11 +61,8 @@ public class Board implements Serializable {
         selected = null;
     }
 
-    public void moveTo(Coord pos) {
-        moveTo(new CoordV2(pos));
-    }
 
-    public void moveTo(CoordV2 pos) {
+    public void moveTo(Coord pos) {
         if (selected != null)
             movePiece(selected.getSquare().getPos(), pos);
     }
@@ -69,7 +82,7 @@ public class Board implements Serializable {
         }
     }
 
-    public Piece getPieceAt(CoordV2 pos) {
+    public Piece getPieceAt(Coord pos) {
         return getPieceAt(pos.X, pos.Y);
     }
 
@@ -82,41 +95,17 @@ public class Board implements Serializable {
     }
 
 
-    public void movePiece(CoordV2 pos1, CoordV2 pos2) {
+    public void movePiece(Coord pos1, Coord pos2) {
         if (!board[pos1.X][pos1.Y].hasPiece())
             return;
         Piece piece = board[pos1.X][pos1.Y].removePiece();
-        List<CoordV2> mat = piece.gerDesloc(this);
-
+        piece.Moved();
 
         board[pos2.X][pos2.Y].setPiece(piece);
     }
 
     public Piece getSelected() {
         return selected;
-    }
-
-    public void printBoard() {
-        System.out.println("Piece Selected: " + selected);
-        int p = 1;
-        System.out.print("    ");
-        for (int i = 0; i < 8; ++i)
-            System.out.print(((char) (i + 'A')) + " ");
-        System.out.println();
-        System.out.print("    ");
-
-        for (int i = 0; i < 8; ++i)
-            System.out.print("- ");
-
-        System.out.println();
-        for (Square[] i : board) {
-            System.out.print(p + " | ");
-            for (Object j : i) {
-                System.out.print(j + " ");
-            }
-            System.out.println();
-            p++;
-        }
     }
 
 }

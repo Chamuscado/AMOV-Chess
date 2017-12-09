@@ -5,12 +5,9 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
-import com.isec.alex_joao.amov_tp.Chess.CoordV2;
 
 public class GameActivity extends Activity implements BoardFragment.OnFragmentInteractionListener {
     BoardFragment boardFragment;

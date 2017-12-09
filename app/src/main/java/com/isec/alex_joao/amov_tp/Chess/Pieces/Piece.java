@@ -9,12 +9,14 @@ public class Piece implements Serializable {
 
     protected Square square;
     protected Player player;
+    protected boolean fistMoved;
 
     public Piece(Player player) {
         this.player = player;
+        fistMoved = true;
     }
 
-    protected boolean addPieceList(Board board, List<CoordV2> list, CoordV2 pos) {
+    protected boolean addPieceList(Board board, List<Coord> list, Coord pos) {
         boolean resp = false;
         if (pos.isValid()) {
             Piece p = board.getPieceAt(pos);
@@ -34,6 +36,14 @@ public class Piece implements Serializable {
         return resp;
     }
 
+    public boolean isFistMoved() {
+        return fistMoved;
+    }
+
+    public void Moved() {
+        this.fistMoved = false;
+    }
+
     public Square getSquare() {
         return square;
     }
@@ -46,7 +56,7 @@ public class Piece implements Serializable {
         return player;
     }
 
-    public List<CoordV2> gerDesloc(Board board) {
+    public List<Coord> gerDesloc(Board board) {
         return null;
     }
 

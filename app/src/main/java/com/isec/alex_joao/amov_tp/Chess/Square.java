@@ -18,8 +18,8 @@ public class Square implements Serializable {
         this.y = y;
     }
 
-    public CoordV2 getPos() {
-        return new CoordV2(x, y);
+    public Coord getPos() {
+        return new Coord(x, y);
     }
 
     public int getX() {
