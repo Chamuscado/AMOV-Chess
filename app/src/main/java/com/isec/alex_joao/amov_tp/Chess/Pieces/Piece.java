@@ -28,12 +28,24 @@ public class Piece implements Serializable {
                     resp = true;
                 } else {
                     Player player = p.getPlayer();
-                    if (!player.equals(this.player))
+                    if (player != this.player)
                         list.add(pos);
                 }
             }
         }
         return resp;
+    }
+
+    public void moveTo(Board board, Coord pos2) {
+        Coord pos = getSquare().getPos();
+
+        Piece piece = board.getSquareAt(pos).removePiece();
+        piece.Moved();
+        board.getSquareAt(pos2).setPiece(piece);
+
+    }
+
+    public void tick() {
     }
 
     public boolean isFistMoved() {

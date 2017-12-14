@@ -20,6 +20,12 @@ public class Player implements Serializable {
         return dir;
     }
 
+    public void tick()
+    {
+        for(Piece i : pieces)
+            i.tick();
+    }
+
     public int getId() {
         return id;
     }

@@ -45,6 +45,7 @@ public class Square implements Serializable {
         this.piece = piece;
     }
 
+
     public Boolean hasPiece() {
         return piece != null;
     }
