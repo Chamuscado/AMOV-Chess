@@ -8,9 +8,17 @@ public class Chess implements Serializable {
     private Player[] players;
     private Board board;
     private Player jogadorAtual;
-
+    public static final int OneVsPhone = 0;
+    public static final int OneVsOne = 1;
+    public static final int OneVsOneNetwork = 2; // é suposto só ser usado para comunicar entre as atividades
+    public static final int OneVsOneNetworkServer = 3;
+    public static final int OneVsOneNetworkClient = 4;
 
     public Chess() {
+        this(OneVsOne);
+    }
+
+    public Chess(int type) {
         players = new Player[2];
         jogadorAtual = players[0] = new Player(0, new Coord(0, 1));
         players[1] = new Player(1, new Coord(0, -1));
@@ -55,6 +63,7 @@ public class Chess implements Serializable {
         if (i == Board.NEXTPLAYER) {
             nextPlayer();
         }
+
     }
 
 

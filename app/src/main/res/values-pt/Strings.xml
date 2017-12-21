@@ -4,4 +4,11 @@
     <string name="newGame">Novo Jogo</string>
     <string name="loadGame">Carregar Jogo</string>
     <string name="notDoneYet">Ainda não implmentado!!!</string>
+    <string name="_1_vs_phone">1 vs telemovel</string>
+    <string name="_1_vs_1">1 vs 1</string>
+    <string name="_1_vs_1_network">1 vs 1 (rede)</string>
+    <string name="errorNetWorkConnect">Nenhuma conexão de rede!</string>
+    <string name="WaitingClient">À espera do adversário</string>
+    <string name="create">Create</string>
+    <string name="join">Join</string>
 </resources>

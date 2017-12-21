@@ -2,15 +2,11 @@ package com.isec.alex_joao.amov_tp;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
 
@@ -25,8 +21,8 @@ import com.isec.alex_joao.amov_tp.Chess.Chess;
  */
 public class BoardFragment extends Fragment {
 
+    BoardView boardView;
     private Chess game;
-
     private OnFragmentInteractionListener mListener;
 
     public BoardFragment() {
@@ -42,7 +38,6 @@ public class BoardFragment extends Fragment {
         return fragment;
     }
 
-
     public static BoardFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -51,8 +46,6 @@ public class BoardFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    BoardView boardView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +59,7 @@ public class BoardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        boardView = new BoardView(getActivity(),game);
+        boardView = new BoardView(getActivity());
         //FrameLayout frameLayout = getView().findViewById(R.id.BoardView);
         //frameLayout.addView(boardView);
 

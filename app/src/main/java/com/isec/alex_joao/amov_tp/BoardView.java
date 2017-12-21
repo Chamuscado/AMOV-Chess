@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
 import com.isec.alex_joao.amov_tp.Chess.Coord;
@@ -20,6 +19,7 @@ import java.util.List;
  */
 
 public class BoardView extends View {
+    final static int MAX = 10;
     int[] corSquare;
     Paint boardPaint;
     Paint textPaint;
@@ -27,9 +27,8 @@ public class BoardView extends View {
     float cellSizeX;
     float cellSizeY;
     Chess game;
-    final static int MAX = 10;
 
-    public BoardView(Context context, Chess game) {
+    public BoardView(Context context) {
         super(context);
         corSquare = new int[2];
         corSquare[0] = getResources().getColor(R.color.Square0);
@@ -37,7 +36,9 @@ public class BoardView extends View {
         boardPaint = new Paint();
         textPaint = new Paint();
         cellSize = 0;
-        this.game = game;
+        game = ChessApp.game;
+        if (game == null)
+            game = new Chess();
     }
 
     @Override

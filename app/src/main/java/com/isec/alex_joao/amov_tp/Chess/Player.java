@@ -3,12 +3,14 @@ package com.isec.alex_joao.amov_tp.Chess;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
 
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
     ArrayList<Piece> pieces;
     int id;
     private Coord dir;
+    Socket des;
 
     public Player(int id, Coord dir) {
         this.id = id;
@@ -20,9 +22,8 @@ public class Player implements Serializable {
         return dir;
     }
 
-    public void tick()
-    {
-        for(Piece i : pieces)
+    public void tick() {
+        for (Piece i : pieces)
             i.tick();
     }
 

@@ -35,7 +35,7 @@ public class Board implements Serializable {
         if (p != null)                                            //TODO -> verificar se a peça é do jogador
         {
             Player player2 = p.getPlayer();
-            if (player2 == player) {                   //muda   a peça selecionada
+            if (player2 == player) {                   //muda a peça selecionada
                 selected = p;
             } else if (list != null)
                 if (list.contains(pos)) {                           //verifica se é uma jogada valida

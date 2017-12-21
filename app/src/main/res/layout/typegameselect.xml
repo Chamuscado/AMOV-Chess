@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/OneVsPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_1_vs_phone" />
+
+    <Button
+        android:id="@+id/OneVsOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_1_vs_1" />
+
+    <Button
+        android:id="@+id/OneVsOneNetwork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/_1_vs_1_network" />
+</LinearLayout>
