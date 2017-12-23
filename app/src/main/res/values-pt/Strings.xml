@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">XADREZ</string>
+
     <string name="newGame">Novo Jogo</string>
     <string name="loadGame">Carregar Jogo</string>
-    <string name="notDoneYet">Ainda não implmentado!!!</string>
+    <string name="settings">Definições</string>
+
+    <string name="notDoneYet">Ainda não implementado!!!</string>
+
     <string name="_1_vs_phone">1 vs telemovel</string>
     <string name="_1_vs_1">1 vs 1</string>
     <string name="_1_vs_1_network">1 vs 1 (rede)</string>
+
+    <string name="with_clock">Com relogio</string>
+    <string name="without_clock">Sem relogio</string>
+
     <string name="errorNetWorkConnect">Nenhuma conexão de rede!</string>
-    <string name="WaitingClient">À espera do adversário</string>
-    <string name="create">Create</string>
-    <string name="join">Join</string>
+    <string name="WaitingClient">À espera do adversário..</string>
+    <string name="waiting">Aguardando..</string>
+    <string name="create">Criar jogo</string>
+    <string name="join">Juntar a jogo</string>
+
+
 </resources>

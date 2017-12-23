@@ -27,6 +27,7 @@ public class StartActivity extends Activity {
         Button OneVsOne = (Button) view1.findViewById(R.id.OneVsOne);
         Button OneVsOneNetwork = (Button) view1.findViewById(R.id.OneVsOneNetwork);
         final Activity act = this;
+
         OneVsPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,6 +36,7 @@ public class StartActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         OneVsOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +45,7 @@ public class StartActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         OneVsOneNetwork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +59,10 @@ public class StartActivity extends Activity {
     }
 
     public void onLoadGame(View view) {
+        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onSettings(View view){
         Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
     }
 }

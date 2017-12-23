@@ -1,14 +1,25 @@
 <resources>
     <string name="app_name">CHESS</string>
+
     <string name="newGame">New Game</string>
     <string name="loadGame">Load Game</string>
+    <string name="settings">Settings</string>
+
     <string name="notDoneYet">Not done yet!!!</string>
+
     <string name="_1_vs_phone">1 vs phone</string>
     <string name="_1_vs_1">1 vs 1</string>
     <string name="_1_vs_1_network">1 vs 1 (network)</string>
+
+    <string name="with_clock">With clock</string>
+    <string name="without_clock">Without clock</string>
+
     <string name="errorNetWorkConnect">No network connection!</string>
-    <string name="WaitingClient">Waiting for the opponent</string>
-    <string name="waiting">Waiting</string>
+    <string name="WaitingClient">Waiting for the opponent..</string>
+    <string name="waiting">Waiting..</string>
     <string name="create">Create</string>
     <string name="join">Join</string>
+
+
+
 </resources>
