@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <Button
-        android:id="@+id/create"
+        android:id="@+id/withClock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/create" />
+        android:text="@string/with_clock" />
 
     <Button
-        android:id="@+id/join"
+        android:id="@+id/withoutClock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/join" />
-
+        android:text="@string/without_clock" />
 </LinearLayout>

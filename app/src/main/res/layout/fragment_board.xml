@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.isec.alex_joao.amov_tp.BoardFragment"
-    android:id="@+id/BoardView">
+    android:id="@+id/BoardView"
+    >
 
 </FrameLayout>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.isec.alex_joao.amov_tp.StartActivity"
+    android:background="@drawable/background"
     >
 
     <LinearLayout
@@ -40,22 +42,37 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25sp"
-                android:layout_marginLeft="25sp"
-                android:layout_marginRight="25sp"
-                android:onClick="onNewGame"
-                android:text="@string/newGame" />
+                android:orientation="horizontal"
+                android:layout_margin="25dp"
+                android:gravity="center">
+
+                <Button
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25sp"
+                    android:onClick="onNewGame"
+                    android:text="@string/newGame" />
+
+                <Button
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="25sp"
+                    android:onClick="onLoadGame"
+                    android:text="@string/loadGame" />
+
+            </LinearLayout>
+
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25sp"
                 android:layout_marginRight="25sp"
-                android:onClick="onLoadGame"
-                android:text="@string/loadGame" />
+                android:onClick="onHistorico"
+                android:text="@string/historico" />
 
             <Button
                 android:layout_width="match_parent"
@@ -64,6 +81,14 @@
                 android:layout_marginRight="25sp"
                 android:onClick="onSettings"
                 android:text="@string/settings" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25sp"
+                android:layout_marginRight="25sp"
+                android:onClick="onAbout"
+                android:text="@string/about" />
 
         </LinearLayout>
     </LinearLayout>

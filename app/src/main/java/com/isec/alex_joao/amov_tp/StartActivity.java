@@ -3,6 +3,7 @@ package com.isec.alex_joao.amov_tp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class StartActivity extends Activity {
         Button OneVsPhone = (Button) view1.findViewById(R.id.OneVsPhone);
         Button OneVsOne = (Button) view1.findViewById(R.id.OneVsOne);
         Button OneVsOneNetwork = (Button) view1.findViewById(R.id.OneVsOneNetwork);
+
         final Activity act = this;
 
         OneVsPhone.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,7 @@ public class StartActivity extends Activity {
                 startActivity(intent);
             }
         });
+
         alertdialog.setView(view1);
         alertdialog.show();
     }
@@ -65,4 +68,14 @@ public class StartActivity extends Activity {
     public void onSettings(View view){
         Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
     }
+
+    public void onHistorico(View view){
+        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+    }
+
+    public void onAbout(View view){
+        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+    }
+
+
 }

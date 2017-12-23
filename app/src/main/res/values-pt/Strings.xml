@@ -5,6 +5,8 @@
     <string name="newGame">Novo Jogo</string>
     <string name="loadGame">Carregar Jogo</string>
     <string name="settings">Definições</string>
+    <string name="about">Sobre</string>
+    <string name="historico">Tabelas de liderança</string>
 
     <string name="notDoneYet">Ainda não implementado!!!</string>
 
