@@ -21,7 +21,7 @@ public class StartActivity extends Activity {
 
     public void onNewGame(View view) {
 
-        AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertdialog = new AlertDialog.Builder(this, R.style.CustomDialog);
         View view1 = getLayoutInflater().inflate(R.layout.typegameselect, null);
 
         Button OneVsPhone = (Button) view1.findViewById(R.id.OneVsPhone);
@@ -66,11 +66,13 @@ public class StartActivity extends Activity {
     }
 
     public void onSettings(View view){
-        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
-    public void onHistorico(View view){
-        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+    public void onLeaderboards(View view){
+        Intent intent = new Intent(this, LeaderboardsActivity.class);
+        startActivity(intent);
     }
 
     public void onAbout(View view){

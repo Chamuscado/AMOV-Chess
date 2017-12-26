@@ -6,7 +6,8 @@
     <string name="loadGame">Carregar Jogo</string>
     <string name="settings">Definições</string>
     <string name="about">Sobre</string>
-    <string name="historico">Tabelas de liderança</string>
+    <string name="leaderboards">Tabelas de liderança</string>
+    <string name="profile">Perfil</string>
 
     <string name="notDoneYet">Ainda não implementado!!!</string>
 

@@ -16,7 +16,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="250dp"
             android:orientation="vertical">
 
             <TextView
@@ -33,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/start" />
+
 
         </RelativeLayout>
 
@@ -71,8 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25sp"
                 android:layout_marginRight="25sp"
-                android:onClick="onHistorico"
-                android:text="@string/historico" />
+                android:onClick="onLeaderboards"
+                android:text="@string/leaderboards" />
 
             <Button
                 android:layout_width="match_parent"
