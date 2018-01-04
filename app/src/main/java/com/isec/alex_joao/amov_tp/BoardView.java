@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
 import com.isec.alex_joao.amov_tp.Chess.Coord;
@@ -52,6 +53,9 @@ public class BoardView extends View {
         float textOffsetY = 0.30f * cellSizeY;
         float coordSize = 0.80f * cellSizeY;
         canvas.drawLine(0, 0, cellSizeX, cellSizeY, textPaint);
+        canvas.drawLine(cellSizeX * MAX, 0, cellSizeX * (MAX - 1), cellSizeY, textPaint);
+        canvas.drawLine(0, cellSizeY * MAX, cellSizeX, cellSizeY * (MAX - 1), textPaint);
+        canvas.drawLine(cellSizeX * MAX, cellSizeY * MAX, cellSizeX * (MAX - 1), cellSizeY * (MAX - 1), textPaint);
 
         Square s = null;
         List<Coord> posPos = null;
@@ -107,72 +111,6 @@ public class BoardView extends View {
             }
         }
 
-/*
-        cellSize = canvas.getWidth() / (float) MAX;
-        float textSize = cellSize;
-        float textSizeCoords = cellSize * (float) 0.8;
-        Coord c;
-        Piece p;
-        textPaint.setTextSize(textSize);
-        float PiecesOffset = 0.15f * cellSize;
-        float TextOffset = 0.30f * cellSize;
-        boardPaint.reset();
-        Square s = null;
-        List<Coord> posPos = null;
-        if (game.hasSelected()) {
-            s = game.getSelected().getSquare();
-            if (s != null)
-                posPos = s.getPiece().gerDesloc(game.getBoard());
-        }
-
-        for (int x = 0; x < MAX; ++x) {
-            for (int y = 0; y < MAX; ++y) {
-                c = new Coord(x, y);
-                if ((x == 0 || x == (MAX - 1)) && y != 0 && y != (MAX - 1)) {
-                    textPaint.setTextSize(textSizeCoords);
-                    textPaint.setColor(Color.BLACK);
-
-                    canvas.drawText(Integer.toString(MAX - y - 1), x * cellSize + TextOffset, (y + 1) * cellSize - PiecesOffset, textPaint);
-
-                } else if ((y == 0 || y == (MAX - 1)) && x != 0 && x != (MAX - 1)) {
-                    textPaint.setTextSize(textSizeCoords);
-                    textPaint.setColor(Color.BLACK);
-                    canvas.drawText(Character.toString((char) ('a' + x - 1)), x * cellSize + TextOffset, (y + 1) * cellSize - PiecesOffset, textPaint);
-                }
-                if (c.isValid()) {
-                    boardPaint.setColor(corSquare[(x + y) % 2]);
-                    drawCoordinate(c, canvas, cellSize, boardPaint, MAX);
-                    if (s != null)
-                        if (s.getPos().equals(c)) {
-                            boardPaint.setColor(getResources().getColor(R.color.SquareOfSelecedPiece));
-                        }
-                    if (posPos != null) {
-                        if (posPos.contains(c)) {
-                            boardPaint.setColor(getResources().getColor(R.color.PossibleMovement));
-                        }
-                    }
-
-                    drawCoordinate(c, canvas, cellSize, boardPaint, MAX);
-                    // if (isInEditMode()) continue;
-                    p = game.getBoard().getPieceAt(x, MAX - y - 3);          //verificar cordenadas
-                    if (p != null) {
-                        textPaint.setTextSize(textSize);
-                        textPaint.setColor(Color.BLACK);
-                        canvas.drawText(p.getUnicodoString(), (x + 1) * cellSize + PiecesOffset, (MAX - y - 1) * cellSize - PiecesOffset, textPaint);
-
-                    } else {
-                        textPaint.setTextSize(textSize / 2);
-                        canvas.drawText(c.toString(), (x + 1) * cellSize, (MAX - y - 1) * cellSize - PiecesOffset, textPaint);
-                    }
-                }
-            }
-        }
-        */
-    }
-
-    @Deprecated
-    private void drawCoordinate(Coord c, Canvas canvas, float cellSize, Paint paint, int max) {
-        canvas.drawRect((c.getX() + 1) * cellSize, (c.getY() + 1) * cellSize, (c.getX() + 2) * cellSize, (c.getY() + 2) * cellSize, paint);
     }
 
     @Override
@@ -189,7 +127,8 @@ public class BoardView extends View {
             int y = (int) (event.getY() / cellSizeY);
             Coord pos = new Coord(x - 1, MAX - y - 2);
             if (pos.isValid()) {
-                game.setSelected(pos);
+                if (!game.setSelected(pos))
+                    Toast.makeText(getContext(), getResources().getString(R.string.wrongplayer), Toast.LENGTH_SHORT).show();
                 invalidate();
             }
         }

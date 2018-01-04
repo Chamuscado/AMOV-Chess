@@ -21,7 +21,8 @@
     <string name="waiting">Waiting..</string>
     <string name="create">Create</string>
     <string name="join">Join</string>
-
+    <string name="player">Jodador</string>
+    <string name="wrongplayer">Not your time!</string>
 
 
 </resources>

@@ -22,6 +22,8 @@
     <string name="waiting">Aguardando..</string>
     <string name="create">Criar jogo</string>
     <string name="join">Juntar a jogo</string>
+    <string name="player">Jodador</string>
+    <string name="wrongplayer">Não é a sua vez!</string>
 
 
 </resources>

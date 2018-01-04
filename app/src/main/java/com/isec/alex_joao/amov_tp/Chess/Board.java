@@ -11,6 +11,7 @@ public class Board implements Serializable {
     private Piece selected;
     protected static final int SAMEPLAYER = 0;
     protected static final int NEXTPLAYER = 1;
+    protected static final int WRONGPLAYER = 2;
 
     public Board(Coord size) {
         board = new Square[size.X][size.Y];
@@ -56,15 +57,8 @@ public class Board implements Serializable {
         return resp;
     }
 
-
     public void removeSelected() {
         selected = null;
-    }
-
-    @Deprecated
-    public void moveTo(Coord pos) {
-        if (selected != null)
-            movePiece(selected.getSquare().getPos(), pos);
     }
 
     public void initBoard(Player[] players) {
@@ -81,7 +75,6 @@ public class Board implements Serializable {
                 board[x][y].setPiece(pieces.get(aux));
         }
     }
-
 
     public Piece getPieceAt(Coord pos) {
         return getPieceAt(pos.X, pos.Y);
@@ -105,21 +98,6 @@ public class Board implements Serializable {
 
     public Square getSquareAt(Coord pos) {
         return getSquareAt(pos.getX(), pos.getY());
-    }
-
-    @Deprecated
-    public void movePiece(Coord pos1, Coord pos2) {
-        if (!board[pos1.X][pos1.Y].hasPiece())
-            return;
-        Piece piece = board[pos1.X][pos1.Y].removePiece();
-        piece.Moved();
-        board[pos2.X][pos2.Y].setPiece(piece);
-        if (piece instanceof Pawn) {
-            if (Math.sqrt(Math.pow(pos1.getX() - (double) pos2.getX(), 2) + Math.pow(pos1.getY() - (double) pos2.getY(), 2)) == 2)
-                ((Pawn) piece).setDoubleSquare(true);
-            else
-                ((Pawn) piece).setDoubleSquare(false);
-        }
     }
 
     public Piece getSelected() {

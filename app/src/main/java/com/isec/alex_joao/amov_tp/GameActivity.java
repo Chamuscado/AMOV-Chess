@@ -42,23 +42,27 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
     ProgressDialog waiting;
     Handler handle;
     int mode;
+    Activity act = this;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        if (savedInstanceState != null)
-            ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
-        if (ChessApp.game == null) {
-            Intent intent = getIntent();
-            if (intent != null)
-                mode = intent.getIntExtra("mode", Chess.OneVsOne);
-        }
+        ChessApp.setContext(this);
+        //if (savedInstanceState != null)
+        //    ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
 
+        //if (ChessApp.game == null) {
+        Intent intent = getIntent();
+        if (intent != null) {
+            mode = intent.getIntExtra("mode", Chess.OneVsOne);
+            if (mode != Chess.ContinueGame)
+                ChessApp.game = new Chess(mode);
+        }
+        //}
         handle = new Handler();
 
     }
-
 
     @Override
     protected void onResume() {
@@ -123,10 +127,8 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
+        //ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
     }
-
-    Activity act = this;
 
     private void startServer() {
         MulticastSocket multicastSocket = null;
