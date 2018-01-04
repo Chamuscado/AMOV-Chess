@@ -75,7 +75,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                 mode = Chess.OneVsOne;
             } else {
 
-                AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
+                AlertDialog.Builder alertdialog = new AlertDialog.Builder(this, R.style.CustomDialog);
                 View view1 = getLayoutInflater().inflate(R.layout.create_or_join, null);
 
                 Button create = (Button) view1.findViewById(R.id.create);
