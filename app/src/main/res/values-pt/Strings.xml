@@ -25,6 +25,15 @@
     <string name="join">Juntar a jogo</string>
     <string name="player">Jodador</string>
     <string name="wrongplayer">Não é a sua vez!</string>
+    <string name="tirar_foto_de_perfil">Tirar foto de Perfil</string>
+    <string name="perfil_adicionado">Perfil adicionado!</string>
+    <string name="perfil_invalido">O Perfil é invalido</string>
+    <string name="name">Nome</string>
+    <string name="defeats">" Derrotas: "</string>
+    <string name="wins">"Vitorias: "</string>
+    <string name="camara_em_utilizacao">A câmara está em utilização</string>
+    <string name="perfil_ja_exite">O perfil já exite</string>
+    <string name="changeCamera">Mudar Camara</string>
 
 
 </resources>

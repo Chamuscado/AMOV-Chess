@@ -22,7 +22,6 @@ import com.isec.alex_joao.amov_tp.Chess.Chess;
 public class BoardFragment extends Fragment {
 
     BoardView boardView;
-    private Chess game;
     private OnFragmentInteractionListener mListener;
 
     public BoardFragment() {
@@ -32,7 +31,6 @@ public class BoardFragment extends Fragment {
     public static BoardFragment newInstance(Chess game) {
         BoardFragment fragment = new BoardFragment();
         Bundle args = new Bundle();
-        args.putSerializable("game", game);
 
         fragment.setArguments(args);
         return fragment;
@@ -50,10 +48,6 @@ public class BoardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            game = (Chess) getArguments().getSerializable("game");
-        }
-
     }
 
     @Override

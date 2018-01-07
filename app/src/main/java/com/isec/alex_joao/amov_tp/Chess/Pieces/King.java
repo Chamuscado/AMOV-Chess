@@ -8,12 +8,14 @@ import java.util.List;
 
 public class King extends Piece implements Serializable {
 
-    public King(Player player) {
-        super(player);
+    private boolean check;
+    public King(Player player,Board board) {
+        super(player,board);
+        check = false;
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
 
@@ -22,6 +24,24 @@ public class King extends Piece implements Serializable {
                 addPieceList(board, list, new Coord(i + pos.getX(), j + pos.getY()));
         list.remove(getSquare().getPos());
         return list;
+    }
+
+    public boolean isCheck() {
+        return check;
+    }
+
+    @Override
+    public void tick() {
+        Coord pos = getSquare().getPos();
+        List<Piece> list= board.getGame().getOtherPlayer().getPieces();
+        for (Piece i: list             ) {
+            for (Coord j : i.gerDesloc()){
+                if(pos.equals(j)){
+                    check = true;
+                    return;
+                }
+            }
+        }
     }
 
     @Override

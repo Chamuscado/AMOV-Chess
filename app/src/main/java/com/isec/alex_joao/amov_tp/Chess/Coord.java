@@ -1,8 +1,11 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
-import java.io.Serializable;
+import android.support.annotation.NonNull;
 
-public class Coord implements Serializable {
+import java.io.Serializable;
+import java.util.Comparator;
+
+public class Coord implements Serializable{
     protected int X, Y;
 
     public int getX() {
@@ -47,4 +50,5 @@ public class Coord implements Serializable {
         Coord cord = (Coord) obj;
         return X == cord.getX() && Y == cord.getY();
     }
+
 }

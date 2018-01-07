@@ -27,7 +27,7 @@ public class BoardView extends View {
     float cellSize;
     float cellSizeX;
     float cellSizeY;
-    Chess game;
+
 
     public BoardView(Context context) {
         super(context);
@@ -37,13 +37,12 @@ public class BoardView extends View {
         boardPaint = new Paint();
         textPaint = new Paint();
         cellSize = 0;
-        game = ChessApp.game;
-        if (game == null)
-            game = new Chess();
+
     }
 
     @Override
     public void draw(Canvas canvas) {               // TODO -> é preciso refazer todo o método
+        Chess game = ChessApp.game;
         super.draw(canvas);
         cellSizeX = canvas.getWidth() / MAX;
         cellSizeY = canvas.getHeight() / MAX;
@@ -56,13 +55,16 @@ public class BoardView extends View {
         canvas.drawLine(cellSizeX * MAX, 0, cellSizeX * (MAX - 1), cellSizeY, textPaint);
         canvas.drawLine(0, cellSizeY * MAX, cellSizeX, cellSizeY * (MAX - 1), textPaint);
         canvas.drawLine(cellSizeX * MAX, cellSizeY * MAX, cellSizeX * (MAX - 1), cellSizeY * (MAX - 1), textPaint);
-
+        Coord jogadorAtualKing = null;
+        if (game.isKingCheck()) {
+            jogadorAtualKing = game.getJogadorAtual().getKing().getSquare().getPos();
+        }
         Square s = null;
         List<Coord> posPos = null;
         if (game.hasSelected()) {
             s = game.getSelected().getSquare();
             if (s != null)
-                posPos = s.getPiece().gerDesloc(game.getBoard());
+                posPos = s.getPiece().gerDesloc();
         }
 
         for (int x = 0; x < MAX; ++x) {
@@ -88,6 +90,10 @@ public class BoardView extends View {
                     //textPaint.setTextSize(cellSizeX / 4);
                     //canvas.drawText(new Coord(x, y).toString() + pos.toString(), x * cellSizeX, (y + 1) * cellSizeY - piecesOffsetY, textPaint);
 
+                    if(jogadorAtualKing != null && jogadorAtualKing.equals(pos)){
+                        boardPaint.setColor(getResources().getColor(R.color.KingCheck));
+                        canvas.drawRect(x * cellSizeX, y * cellSizeY, (x + 1) * cellSizeX, (y + 1) * cellSizeY, boardPaint);
+                    }
 
                     if (s != null)
                         if (s.getPos().equals(pos)) {
@@ -122,12 +128,13 @@ public class BoardView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         if (cellSizeX != 0 || cellSizeY != 0) {
             int x = (int) (event.getX() / cellSizeX);
             int y = (int) (event.getY() / cellSizeY);
             Coord pos = new Coord(x - 1, MAX - y - 2);
             if (pos.isValid()) {
-                if (!game.setSelected(pos))
+                if (!ChessApp.game.setSelected(pos))
                     Toast.makeText(getContext(), getResources().getString(R.string.wrongplayer), Toast.LENGTH_SHORT).show();
                 invalidate();
             }

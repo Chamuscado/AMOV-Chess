@@ -1,8 +1,8 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
+import com.isec.alex_joao.amov_tp.Chess.Pieces.King;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
-import com.isec.alex_joao.amov_tp.ChessApp;
-import com.isec.alex_joao.amov_tp.R;
+import com.isec.alex_joao.amov_tp.Perfil;
 
 import java.io.Serializable;
 import java.net.Socket;
@@ -14,15 +14,31 @@ public class Player implements Serializable {
     Socket des;
     private Coord dir;
     private String name;
+    private King king;
+    private Perfil perfil;
 
-    public Player(String name, int id, Coord dir) {
+    public Player(int id, Coord dir) {
         this.id = id;
         pieces = new ArrayList<>();
         this.dir = dir;
+        king = null;
+        perfil = null;
     }
 
-    public Player(int id, Coord dir) {
-        this(ChessApp.getContext().getString(R.string.player) + id, id, dir);
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
+    public Piece getKing() {
+        return king;
+    }
+
+    public boolean isKingInCheck() {
+        return king.isCheck();
     }
 
     public String getName() {
@@ -48,6 +64,9 @@ public class Player implements Serializable {
 
     public void addPiece(Piece piece) {
         pieces.add(piece);
+        if (piece instanceof King && king == null) {
+            king = (King) piece;
+        }
     }
 
     public ArrayList<Piece> getPieces() {
@@ -58,8 +77,4 @@ public class Player implements Serializable {
         pieces.remove(p);
     }
 
-    public void play(Chess chess)
-    {
-
-    }
 }

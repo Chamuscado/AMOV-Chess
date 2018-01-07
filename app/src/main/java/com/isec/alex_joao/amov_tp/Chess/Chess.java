@@ -29,27 +29,35 @@ public class Chess implements Serializable {
         players = new Player[2];
         jogadorAtual = players[0] = new Player(0, new Coord(0, 1));
         players[1] = new Player(1, new Coord(0, -1));
-        board = new Board(new Coord(8, 8));
+        board = new Board(new Coord(8, 8), this);
         initBoard();
+    }
+
+    public boolean isKingCheck() {
+        return jogadorAtual.isKingInCheck();
+    }
+
+    public Player getJogadorAtual() {
+        return jogadorAtual;
     }
 
     public void initBoard() {
         for (int j = 0; j < 2; j++) {
-            players[j].addPiece(new Rook(players[j]));
-            players[j].addPiece(new Knight(players[j]));
-            players[j].addPiece(new Bishop(players[j]));
+            players[j].addPiece(new Rook(players[j],board));
+            players[j].addPiece(new Knight(players[j],board));
+            players[j].addPiece(new Bishop(players[j],board));
             if (j == 0) {
-                players[j].addPiece(new Queen(players[j]));
-                players[j].addPiece(new King(players[j]));
+                players[j].addPiece(new Queen(players[j],board));
+                players[j].addPiece(new King(players[j],board));
             } else if (j == 1) {
-                players[j].addPiece(new King(players[j]));
-                players[j].addPiece(new Queen(players[j]));
+                players[j].addPiece(new King(players[j],board));
+                players[j].addPiece(new Queen(players[j],board));
             }
-            players[j].addPiece(new Bishop(players[j]));
-            players[j].addPiece(new Knight(players[j]));
-            players[j].addPiece(new Rook(players[j]));
+            players[j].addPiece(new Bishop(players[j],board));
+            players[j].addPiece(new Knight(players[j],board));
+            players[j].addPiece(new Rook(players[j],board));
             for (int i = 0; i < 8; i++)
-                players[j].addPiece(new Pawn(players[j]));
+                players[j].addPiece(new Pawn(players[j],board));
         }
         board.initBoard(players);
     }
@@ -78,6 +86,14 @@ public class Chess implements Serializable {
         return true;
     }
 
+    public Player getOtherPlayer() {
+        if (jogadorAtual == players[0])
+            return players[1];
+        else {
+            return players[0];
+        }
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -85,4 +101,5 @@ public class Chess implements Serializable {
     public boolean hasSelected() {
         return board.getSelected() != null;
     }
+
 }

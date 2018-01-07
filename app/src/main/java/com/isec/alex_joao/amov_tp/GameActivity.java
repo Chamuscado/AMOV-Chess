@@ -49,17 +49,13 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ChessApp.setContext(this);
-        //if (savedInstanceState != null)
-        //    ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
 
-        //if (ChessApp.game == null) {
         Intent intent = getIntent();
         if (intent != null) {
             mode = intent.getIntExtra("mode", Chess.OneVsOne);
             if (mode != Chess.ContinueGame)
                 ChessApp.game = new Chess(mode);
         }
-        //}
         handle = new Handler();
 
     }

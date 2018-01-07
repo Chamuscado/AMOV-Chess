@@ -1,22 +1,28 @@
 package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
-import com.isec.alex_joao.amov_tp.Chess.*;
+import com.isec.alex_joao.amov_tp.Chess.Board;
+import com.isec.alex_joao.amov_tp.Chess.Coord;
+import com.isec.alex_joao.amov_tp.Chess.Player;
+import com.isec.alex_joao.amov_tp.Chess.Square;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class Piece implements Serializable {
+public abstract class Piece implements Serializable {
 
-    protected Square square;
     protected Player player;
-    protected boolean fistMoved;
+    protected Board board;
+    private Square square;
+    private boolean fistMoved;
 
-    public Piece(Player player) {
+    public Piece(Player player, Board board) {
+        this.board = board;
         this.player = player;
         fistMoved = true;
     }
 
     protected boolean addPieceList(Board board, List<Coord> list, Coord pos) {
+
         boolean resp = false;
         if (pos.isValid()) {
             Piece p = board.getPieceAt(pos);
@@ -68,9 +74,7 @@ public class Piece implements Serializable {
         return player;
     }
 
-    public List<Coord> gerDesloc(Board board) {
-        return null;
-    }
+    public abstract List<Coord> gerDesloc();
 
     public String getUnicodoString() {
         return "\u2A09" + player.getId();

@@ -2,9 +2,11 @@ package com.isec.alex_joao.amov_tp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -20,7 +22,6 @@ public class StartActivity extends Activity {
     }
 
     public void onNewGame(View view) {
-
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(this, R.style.CustomDialog);
         View view1 = getLayoutInflater().inflate(R.layout.typegameselect, null);
 

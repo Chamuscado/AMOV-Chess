@@ -29,14 +29,23 @@
         android:padding="10dp">
 
         <Button
-            android:layout_margin="30sp"
+            android:layout_margin="10sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tirar foto de Perfil"
-            android:textSize="20sp"
+            android:text="@string/tirar_foto_de_perfil"
+            android:textSize="20dp"
             android:onClick="onCapturarImagem"/>
-        <ImageView
-            android:background="#ffffe0"
+
+        <Button
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="@string/changeCamera"
+            android:onClick="onChangeCamara"/>
+
+        <FrameLayout
+            android:background="@color/photo_background"
             android:id="@+id/imagePreview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

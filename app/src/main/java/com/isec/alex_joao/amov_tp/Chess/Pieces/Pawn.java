@@ -10,8 +10,8 @@ public class Pawn extends Piece implements Serializable {
 
     private boolean doubleSquare;
 
-    public Pawn(Player player) {
-        super(player);
+    public Pawn(Player player,Board board) {
+        super(player,board);
         doubleSquare = false;
     }
 
@@ -30,7 +30,7 @@ public class Pawn extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord dir = player.getDir();
         Coord pos = getSquare().getPos();
@@ -81,7 +81,6 @@ public class Pawn extends Piece implements Serializable {
                     if (((Pawn) p).isDoubleSquare())
                         list.add(new Coord(pos2.getX() + dir.getX(), pos2.getY() + dir.getY()));
         }
-
         return list;
     }
 

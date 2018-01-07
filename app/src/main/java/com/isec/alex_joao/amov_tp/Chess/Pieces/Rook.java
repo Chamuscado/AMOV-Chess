@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Rook extends Piece implements Serializable {
 
-    public Rook(Player player) {
-        super(player);
+    public Rook(Player player,Board board) {
+        super(player,board);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Rook extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();

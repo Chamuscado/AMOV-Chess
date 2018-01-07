@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Knight extends Piece implements Serializable {
 
-    public Knight(Player player) {
-        super(player);
+    public Knight(Player player,Board board) {
+        super(player,board);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class Knight extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -31,7 +31,6 @@ public class Knight extends Piece implements Serializable {
         if (pos.isValid()) addPieceList(board, list, new Coord(x - 2, y - 1));
         if (pos.isValid()) addPieceList(board, list, new Coord(x - 2, y + 1));
         if (pos.isValid()) addPieceList(board, list, new Coord(x - 1, y + 2));
-
         return list;
     }
 

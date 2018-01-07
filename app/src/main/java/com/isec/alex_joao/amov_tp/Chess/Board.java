@@ -1,19 +1,21 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
-import com.isec.alex_joao.amov_tp.Chess.Pieces.*;
+import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Board implements Serializable {
-    private Square board[][];
-    private Piece selected;
     protected static final int SAMEPLAYER = 0;
     protected static final int NEXTPLAYER = 1;
     protected static final int WRONGPLAYER = 2;
+    private Square board[][];
+    private Piece selected;
+    private Chess game;
 
-    public Board(Coord size) {
+    public Board(Coord size, Chess game) {
+        this.game = game;
         board = new Square[size.X][size.Y];
         for (int i = 0; i < size.X; ++i)
             for (int j = 0; j < size.X; ++j)
@@ -31,7 +33,7 @@ public class Board implements Serializable {
             p = null;
         }
         if (selected != null)
-            list = selected.gerDesloc(this);
+            list = selected.gerDesloc();
 
         if (p != null)                                            //TODO -> verificar se a peça é do jogador
         {
@@ -111,5 +113,9 @@ public class Board implements Serializable {
         Player player = p.getPlayer();
         player.removePiece(p);
         board[pos.X][pos.Y].removePiece();
+    }
+
+    public Chess getGame() {
+        return game;
     }
 }

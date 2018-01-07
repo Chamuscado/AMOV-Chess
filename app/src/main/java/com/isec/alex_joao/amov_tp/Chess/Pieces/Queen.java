@@ -8,12 +8,12 @@ import java.util.List;
 
 public class Queen extends Piece implements Serializable {
 
-    public Queen(Player player) {
-        super(player);
+    public Queen(Player player,Board board) {
+        super(player,board);
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -27,7 +27,6 @@ public class Queen extends Piece implements Serializable {
         for (int i = y + 1; addPieceList(board, list, new Coord(x, i)); ++i) ;
         for (int i = y - 1; addPieceList(board, list, new Coord(x, i)); --i) ;
         for (int i = x - 1; addPieceList(board, list, new Coord(i, y)); --i) ;
-
         return list;
     }
 

@@ -10,12 +10,12 @@ import java.util.List;
 
 public class Bishop extends Piece implements Serializable {
 
-    public Bishop(Player player) {
-        super(player);
+    public Bishop(Player player,Board board) {
+        super(player,board);
     }
 
     @Override
-    public List<Coord> gerDesloc(Board board) {
+    public List<Coord> gerDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -25,7 +25,6 @@ public class Bishop extends Piece implements Serializable {
         for (int i = x - 1, j = y + 1; addPieceList(board, list, new Coord(i, j)); --i, ++j) ;
         for (int i = x + 1, j = y - 1; addPieceList(board, list, new Coord(i, j)); ++i, --j) ;
         for (int i = x - 1, j = y - 1; addPieceList(board, list, new Coord(i, j)); --i, --j) ;
-
         return list;
     }
 
