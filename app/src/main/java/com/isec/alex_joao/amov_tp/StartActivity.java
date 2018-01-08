@@ -77,7 +77,8 @@ public class StartActivity extends Activity {
     }
 
     public void onAbout(View view){
-        Toast.makeText(getApplicationContext(), getString(R.string.notDoneYet), Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
     }
 
 
