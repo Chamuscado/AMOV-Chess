@@ -1,15 +1,18 @@
 package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
-import com.isec.alex_joao.amov_tp.Chess.*;
+import com.isec.alex_joao.amov_tp.Chess.Board;
+import com.isec.alex_joao.amov_tp.Chess.Coord;
+import com.isec.alex_joao.amov_tp.Chess.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Rook extends Piece implements Serializable {
 
-    public Rook(Player player,Board board) {
-        super(player,board);
+    public Rook(Player player, Board board) {
+        super(player, board);
     }
 
     @Override
@@ -18,7 +21,7 @@ public class Rook extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc() {
+    public List<Coord> getDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -37,14 +40,14 @@ public class Rook extends Piece implements Serializable {
     }
 
     @Override
-    public String getUnicodoString() {
+    public String getUnicodeString() {
         String str;
         if (player.getId() == 0)
             str = "\u2656";
         else if (player.getId() == 1)
             str = "\u265C";
         else
-            str = super.getUnicodoString();
+            str = super.getUnicodeString();
         return str;
     }
 }

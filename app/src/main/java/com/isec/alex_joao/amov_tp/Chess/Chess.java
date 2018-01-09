@@ -20,12 +20,14 @@ public class Chess implements Serializable {
     private Player[] players;
     private Board board;
     private Player jogadorAtual;
+    private boolean end;
 
     public Chess() {
         this(OneVsOne);
     }
 
     public Chess(int type) {
+        end = false;
         players = new Player[2];
         jogadorAtual = players[0] = new Player(0, new Coord(0, 1));
         players[1] = new Player(1, new Coord(0, -1));
@@ -77,6 +79,8 @@ public class Chess implements Serializable {
     }
 
     public boolean setSelected(Coord pos) {
+        if(end)
+            return false;
         int i = board.setSelected(pos, jogadorAtual);
         if (i == Board.NEXTPLAYER) {
             nextPlayer();
@@ -102,4 +106,12 @@ public class Chess implements Serializable {
         return board.getSelected() != null;
     }
 
+    public void endGame(Player otherPlayer) {
+        otherPlayer.win();
+        end = true;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
 }

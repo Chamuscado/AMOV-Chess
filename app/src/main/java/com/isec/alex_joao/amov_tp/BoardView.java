@@ -64,7 +64,7 @@ public class BoardView extends View {
         if (game.hasSelected()) {
             s = game.getSelected().getSquare();
             if (s != null)
-                posPos = s.getPiece().gerDesloc();
+                posPos = s.getPiece().getDesloc();
         }
 
         for (int x = 0; x < MAX; ++x) {
@@ -111,7 +111,7 @@ public class BoardView extends View {
                     if (p != null) {
                         textPaint.setTextSize(cellSizeX);
                         textPaint.setColor(Color.BLACK);
-                        canvas.drawText(p.getUnicodoString(), x * cellSizeX + piecesOffsetX, (y + 1) * cellSizeY - piecesOffsetY, textPaint);
+                        canvas.drawText(p.getUnicodeString(), x * cellSizeX + piecesOffsetX, (y + 1) * cellSizeY - piecesOffsetY, textPaint);
                     }
                 }
             }

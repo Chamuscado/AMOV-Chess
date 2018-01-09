@@ -77,4 +77,8 @@ public class Player implements Serializable {
         pieces.remove(p);
     }
 
+    public void win() {
+        if(perfil != null)
+            perfil.addWin();
+    }
 }

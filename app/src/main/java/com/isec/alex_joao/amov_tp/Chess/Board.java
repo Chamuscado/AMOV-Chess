@@ -33,7 +33,7 @@ public class Board implements Serializable {
             p = null;
         }
         if (selected != null)
-            list = selected.gerDesloc();
+            list = selected.getDesloc();
 
         if (p != null)                                            //TODO -> verificar se a peça é do jogador
         {

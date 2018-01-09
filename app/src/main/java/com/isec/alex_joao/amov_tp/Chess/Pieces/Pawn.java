@@ -26,11 +26,11 @@ public class Pawn extends Piece implements Serializable {
 
     @Override
     public String toString() {
-        return "P";
+        return "P(" + getSquare().getX() + "/" + getSquare().getY() + ")";
     }
 
     @Override
-    public List<Coord> gerDesloc() {
+    public List<Coord> getDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord dir = player.getDir();
         Coord pos = getSquare().getPos();
@@ -84,6 +84,7 @@ public class Pawn extends Piece implements Serializable {
         return list;
     }
 
+
     @Override
     public void moveTo(Board board, Coord pos2) {
         Coord pos = getSquare().getPos();
@@ -112,19 +113,27 @@ public class Pawn extends Piece implements Serializable {
     }
 
     @Override
+    public List<Coord> getEatsPossible() {      // TODO -> é preciso implementar isto se não vai correr mal
+        List<Coord> list = new ArrayList<>();
+
+
+        return list;
+    }
+
+    @Override
     public void tick() {
         doubleSquare = false;
     }
 
     @Override
-    public String getUnicodoString() {
+    public String getUnicodeString() {
         String str;
         if (player.getId() == 0)
             str = "\u2659";
         else if (player.getId() == 1)
             str = "\u265F";
         else
-            str = super.getUnicodoString();
+            str = super.getUnicodeString();
         return str;
     }
 }

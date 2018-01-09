@@ -15,7 +15,7 @@ public class Bishop extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc() {
+    public List<Coord> getDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -28,20 +28,21 @@ public class Bishop extends Piece implements Serializable {
         return list;
     }
 
+
     @Override
     public String toString() {
-        return "B";
+        return "B(" + getSquare().getX() + "/" + getSquare().getY() + ")";
     }
 
     @Override
-    public String getUnicodoString() {
+    public String getUnicodeString() {
         String str;
         if (player.getId() == 0)
             str = "\u2657";
         else if (player.getId() == 1)
             str = "\u265D";
         else
-            str = super.getUnicodoString();
+            str = super.getUnicodeString();
         return str;
     }
 }

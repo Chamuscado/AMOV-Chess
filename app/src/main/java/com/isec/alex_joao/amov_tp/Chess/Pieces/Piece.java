@@ -6,6 +6,7 @@ import com.isec.alex_joao.amov_tp.Chess.Player;
 import com.isec.alex_joao.amov_tp.Chess.Square;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Piece implements Serializable {
@@ -48,7 +49,6 @@ public abstract class Piece implements Serializable {
         Piece piece = board.getSquareAt(pos).removePiece();
         piece.Moved();
         board.getSquareAt(pos2).setPiece(piece);
-
     }
 
     public void tick() {
@@ -74,9 +74,20 @@ public abstract class Piece implements Serializable {
         return player;
     }
 
-    public abstract List<Coord> gerDesloc();
+    public abstract List<Coord> getDesloc();
 
-    public String getUnicodoString() {
+    public List<Coord> getEatsPossible() {
+        List<Coord> list = getDesloc();
+        Iterator<Coord> it = list.iterator();
+        while (it.hasNext()) {
+            Coord coord = it.next();
+            if (board.getPieceAt(coord) != null || board.getPieceAt(coord).player.equals(player))
+                it.remove();
+        }
+        return list;
+    }
+
+    public String getUnicodeString() {
         return "\u2A09" + player.getId();
     }
 }

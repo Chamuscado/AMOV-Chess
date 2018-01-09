@@ -13,7 +13,7 @@ public class Queen extends Piece implements Serializable {
     }
 
     @Override
-    public List<Coord> gerDesloc() {
+    public List<Coord> getDesloc() {
         List<Coord> list = new ArrayList<>();
         Coord pos = getSquare().getPos();
         int x = pos.getX();
@@ -32,18 +32,18 @@ public class Queen extends Piece implements Serializable {
 
     @Override
     public String toString() {
-        return "Q";
+        return "Q(" + getSquare().getX() + "/" + getSquare().getY() + ")";
     }
 
     @Override
-    public String getUnicodoString() {
+    public String getUnicodeString() {
         String str;
         if (player.getId() == 0)
             str = "\u2655";
         else if (player.getId() == 1)
             str = "\u265B";
         else
-            str = super.getUnicodoString();
+            str = super.getUnicodeString();
         return str;
     }
 }
