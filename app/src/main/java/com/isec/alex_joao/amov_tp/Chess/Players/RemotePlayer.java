@@ -7,6 +7,7 @@ import com.isec.alex_joao.amov_tp.ChessApp;
 import com.isec.alex_joao.amov_tp.Perfil;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.Socket;
 
 /**
@@ -14,6 +15,7 @@ import java.net.Socket;
  */
 
 public class RemotePlayer extends Player {
+     private ObjectInputStream in =null;
 
 
     public RemotePlayer(int id, Coord dir, Perfil perfil, Chess game) {
@@ -24,6 +26,35 @@ public class RemotePlayer extends Player {
         super(id, dir, game);
     }
 
+    public void startThread(){
+        Thread run = new Thread() {
+            @Override
+            public void run() {
+                Socket gameSocket = ChessApp.getGameSocket();
+
+                while (gameSocket != null && gameSocket.isConnected()) {
+                    if(in == null && gameSocket!= null)
+                        try {
+                            in = new ObjectInputStream(gameSocket.getInputStream());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    try {
+                        Jogada jog = (Jogada) in.readObject();
+                        getGame().joga(jog);
+                    } catch (IOException e) {
+                        ChessApp.endSocket();
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        run.start();
+    }
+
     public RemotePlayer(Player player) {
         super(player);
     }
@@ -31,22 +62,7 @@ public class RemotePlayer extends Player {
     @Override
     public Jogada play() {
 
-        Runnable run = new Runnable() {
-            @Override
-            public void run() {
-                Socket gameSocket = ChessApp.getGameSocket();
-                if (gameSocket != null && gameSocket.isConnected()) {
-                    try {
-                        Jogada jog = (Jogada) ChessApp.in.readObject();
-                        getGame().joga(jog);
-                    } catch (IOException e) {
-                        ChessApp.endSocket();
-                    } catch (ClassNotFoundException e) {
-                    }
-                }
-            }
-        };
-run.run();
+
 
         return null;
     }

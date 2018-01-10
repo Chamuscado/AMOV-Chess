@@ -41,8 +41,7 @@ public class Chess implements Serializable {
         if (type == OneVsOneNetworkClient) {
             players[0] = new RemotePlayer(0, new Coord(0, 1), this);
             players[1] = new LocalPlayer(1, new Coord(0, -1), ChessApp.perfilSelecionado, this);
-        }
-        if (type == OneVsOneNetworkServer) {
+        } else if (type == OneVsOneNetworkServer) {
             players[0] = new LocalPlayer(0, new Coord(0, 1), ChessApp.perfilSelecionado, this);
             players[1] = new RemotePlayer(1, new Coord(0, -1), this);
         } else {
@@ -55,6 +54,7 @@ public class Chess implements Serializable {
         jogadorAtual = players[0];
         board = new Board(new Coord(8, 8), this);
         initBoard();
+        players[0].play();
     }
 
     public boolean isKingCheck() {
@@ -84,6 +84,11 @@ public class Chess implements Serializable {
                 players[j].addPiece(new Pawn(players[j], board));
         }
         board.initBoard(players);
+        if (players[0] instanceof RemotePlayer)
+            ((RemotePlayer) players[0]).startThread();
+        if (players[1] instanceof RemotePlayer)
+            ((RemotePlayer) players[1]).startThread();
+
     }
 
     public void nextPlayer() {

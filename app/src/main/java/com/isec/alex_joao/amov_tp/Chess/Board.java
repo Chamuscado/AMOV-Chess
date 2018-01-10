@@ -39,13 +39,13 @@ public class Board implements Serializable {
         if (selected != null)
             list = selected.getDesloc();
 
-        if (p != null)                                            // verificar se a peça é do jogador
-        {
+        if (p != null) {
             Player player2 = p.getPlayer();
-            if (player2 == player) {                   //muda a peça selecionada
-                selected = p;
+            if (player2 == player) {                   // verificar se a peça é do jogador
+                selected = p;                               //muda a peça selecionada
             } else if (list != null)
                 if (list.contains(pos)) {                           //verifica se é uma jogada valida
+                    sendJogada(new Jogada(selected.getSquare().getPos(), pos));
                     if (getPieceAt(pos) instanceof King) {
                         game.endGame(game.getJogadorAtual());
                     }
@@ -58,22 +58,22 @@ public class Board implements Serializable {
 
             if (list != null)
                 if (list.contains(pos)) {
+                    sendJogada(new Jogada(selected.getSquare().getPos(), pos));
                     selected.moveTo(this, pos);//moveTo(pos);
                     resp = NEXTPLAYER;
                 }
-
-        }
-        if(NEXTPLAYER == resp && ChessApp.getGameSocket() != null)
-        {
-            if(ChessApp.getGameSocket() != null){
-                try {
-                    ChessApp.out.writeObject(new Jogada(p.getSquare().getPos(),pos));
-                } catch (IOException e) {
-                    ChessApp.endSocket();
-                }
-            }
         }
         return resp;
+    }
+
+    private void sendJogada(Jogada jog) {
+        if (ChessApp.getGameSocket() == null)
+            return;
+        try {
+            ChessApp.out.writeObject(jog);
+        } catch (IOException e) {
+            ChessApp.endSocket();
+        }
     }
 
     public void removeSelected() {

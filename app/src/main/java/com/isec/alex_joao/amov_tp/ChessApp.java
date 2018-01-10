@@ -26,7 +26,6 @@ public class ChessApp extends Application {
     public static Chess game;
     public static Perfil perfilSelecionado;
     public static List<Perfil> perfis;
-    public static ObjectInputStream in;
     public static ObjectOutputStream out;
     private static Socket gameSocket;
     private static Context context;
@@ -39,9 +38,9 @@ public class ChessApp extends Application {
         ChessApp.gameSocket = gameSocket;
 
         try {
-            in = new ObjectInputStream(ChessApp.gameSocket.getInputStream());
             out = new ObjectOutputStream(ChessApp.gameSocket.getOutputStream());
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -122,7 +121,6 @@ public class ChessApp extends Application {
         try {
             gameSocket.close();
             out.close();
-            in.close();
             game.removeRemote();
         } catch (IOException e) {
         }

@@ -38,8 +38,8 @@
     <string name="DevelopedBy">Desenvolvido por</string>
     <string name="developer1">Alexandre Protasio | 21230589</string>
     <string name="developer2">João Leitão | 21250715</string>
-    <string name="msgToDeletePerfil">Are you sure you want to delete</string>
-    <string name="cancel">Cancel</string>
+    <string name="msgToDeletePerfil">Tem a certeza que quer apagar</string>
+    <string name="cancel">Cancelar</string>
     <string name="confirm">Ok</string>
     <string name="unselectPerfil">Nenhum perfil selecionado!</string>
 

@@ -29,7 +29,7 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class GameActivity extends Activity implements BoardFragment.OnFragmentInteractionListener {
     private static final int PORT = 5000;
@@ -72,7 +72,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                 mode = Chess.OneVsOne;
             } else {
 
-                AlertDialog.Builder alertdialog = new AlertDialog.Builder(this, R.style.CustomDialog);
+                final AlertDialog.Builder alertdialog = new AlertDialog.Builder(this, R.style.CustomDialog);
                 View view1 = getLayoutInflater().inflate(R.layout.create_or_join, null);
 
                 Button create = (Button) view1.findViewById(R.id.create);
@@ -83,19 +83,20 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                 create.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChessApp.game = new Chess(Chess.OneVsOneNetworkServer);
                         startServer();
+                        ChessApp.game = new Chess(Chess.OneVsOneNetworkServer);
                     }
                 });
                 join.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ChessApp.game = new Chess(Chess.OneVsOneNetworkClient);
                         startClient();
+                        ChessApp.game = new Chess(Chess.OneVsOneNetworkClient);
                     }
                 });
                 alertdialog.setView(view1);
                 alertdialog.show();
+
             }
         } else {
             if (ChessApp.game == null)
@@ -138,7 +139,158 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         return super.onTouchEvent(event);
     }
 
-    private void startServer() {
+    private void startServer() {                        //cria
+        waiting = new ProgressDialog(this);
+        waiting.setMessage(getString(R.string.WaitingClient));
+        waiting.setTitle(getString(R.string.waiting));
+
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final MulticastSocket multicastSocket;
+                try {
+                    multicastSocket = new MulticastSocket(PORT2);
+                    multicastSocket.joinGroup(InetAddress.getByName(groupMCS));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                waiting.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        if (multicastSocket != null)
+                            multicastSocket.close();
+                    }
+                });
+
+                String str;
+                DatagramPacket datagram;
+                do {
+                    byte[] msg = new byte[MSGSIZE];
+                    datagram = new DatagramPacket(msg, MSGSIZE);
+                    try {
+                        multicastSocket.receive(datagram);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    str = new String(datagram.getData(), 0, datagram.getLength());
+                } while (str.compareTo(MSGCONT) != 0 && !multicastSocket.isClosed());
+
+
+                multicastSocket.close();
+                InetAddress add = datagram.getAddress();
+                try {
+                    Socket socket = new Socket(add, PORT);
+                    ChessApp.setGameSocket(socket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return;
+                }
+
+                handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        waiting.dismiss();
+                        if (ChessApp.getGameSocket() == null) {
+                            finish();
+                            Toast.makeText(act, "Server falhado! ", Toast.LENGTH_LONG).show(); // TODO -> debug
+                        } else
+                            Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.getGameSocket().getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        startFragment();
+                    }
+                });
+            }
+        });
+        t.start();
+        waiting.show();
+    }
+
+    private void startClient() {
+        waiting = new ProgressDialog(this);
+        waiting.setMessage(getString(R.string.WaitingClient));
+        waiting.setTitle(getString(R.string.waiting));
+
+        final Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                byte[] msg = MSGCONT.getBytes();
+                DatagramPacket datagram = null;
+                DatagramSocket socket = null;
+                try {
+                    datagram = new DatagramPacket(msg, msg.length, InetAddress.getByName(groupMCS), PORT2);
+                    socket = new DatagramSocket();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                do {
+                    try {
+                        socket.send(datagram);
+                        Thread.sleep(1000);
+                    } catch (IOException e) {
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                while (ChessApp.getGameSocket() == null);
+            }
+        });
+
+        final Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ServerSocket serverSocket = null;
+                try {
+                    serverSocket = new ServerSocket(PORT);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (serverSocket != null) {
+                    do {
+                        try {
+                            t1.start();
+                            Socket socket1 = serverSocket.accept();
+                            ChessApp.setGameSocket(socket1);
+                        } catch (IOException e) {
+                            break;
+                        }
+                    } while (ChessApp.getGameSocket() == null);
+                }
+                try {
+                    serverSocket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                handle.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        waiting.dismiss();
+                        if (ChessApp.getGameSocket() == null) {
+                            finish();
+                            Toast.makeText(act, "Cliente falhado! ", Toast.LENGTH_LONG).show(); // TODO -> debug
+                        } else
+                            Toast.makeText(act, "Cliente iniciado com sucesso status: " + ChessApp.getGameSocket().getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        startFragment();
+                    }
+                });
+            }
+        });
+
+        t.start();
+
+
+        waiting.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                t.interrupt();
+                t1.interrupt();
+            }
+        });
+        waiting.show();
+    }
+
+    private void startServerV1() {
         MulticastSocket multicastSocket = null;
         try {
             multicastSocket = new MulticastSocket(PORT2);
@@ -164,6 +316,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
+               /*
                 String str;
                 DatagramPacket datagram;
                 do {
@@ -177,8 +330,13 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                     str = new String(datagram.getData(), 0, datagram.getLength());
 
                 } while (str.compareTo(MSGCONT) != 0 && !finalMulticastSocket.isClosed());
-                finalMulticastSocket.close();
-                InetAddress add = datagram.getAddress();
+                finalMulticastSocket.close(); */
+                InetAddress add = null;
+                try {
+                    add = InetAddress.getByName("10.65.133.17");//datagram.getAddress();
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                }
                 try {
                     ChessApp.setGameSocket(new Socket(add, PORT));
                 } catch (IOException e) {
@@ -191,7 +349,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                         waiting.dismiss();
                         if (ChessApp.getGameSocket() == null)
                             finish();
-                        //Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.getGameSocket().getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
                     }
                 });
@@ -200,7 +358,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         t.start();
     }
 
-    private void startClient() {
+    private void startClientV1() {
         byte[] msg = MSGCONT.getBytes();
         DatagramPacket datagram = null;
         DatagramSocket socket = null;
@@ -236,20 +394,20 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                     e.printStackTrace();
                 }
                 if (serverSocket != null) {
-                    try {
+                    /*try {
                         serverSocket.setSoTimeout(1000);
                     } catch (SocketException e) {
                         e.printStackTrace();
-                    }
-                    do {
-                        try {
-                            finalSocket.send(finalDatagram);
-                            Socket socket1 = serverSocket.accept();
-                            ChessApp.setGameSocket(socket1);
-                        } catch (IOException e) {
+                    }*/
+                    // do {
+                    try {
+                        //finalSocket.send(finalDatagram);
+                        Socket socket1 = serverSocket.accept();
+                        ChessApp.setGameSocket(socket1);
+                    } catch (IOException e) {
 
-                        }
-                    } while (ChessApp.getGameSocket() == null && !finalSocket.isClosed());
+                    }
+                    //} while (ChessApp.getGameSocket() == null && !finalSocket.isClosed());
                 }
                 handle.post(new Runnable() {
                     @Override
@@ -257,7 +415,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                         waiting.dismiss();
                         if (ChessApp.getGameSocket() == null)
                             finish();
-                        // Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.getGameSocket().getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
                     }
                 });
@@ -281,7 +439,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         player1.setText(players[0].getPerfil().getStrNome());
         player2.setText(players[1].getPerfil().getStrNome());
 
-        utils.setPic(fotoPlayer1, players[0].getPerfil().getImagemFundo(),getApplicationContext());
-        utils.setPic(fotoPlayer2, players[1].getPerfil().getImagemFundo(),getApplicationContext());
+        utils.setPic(fotoPlayer1, players[0].getPerfil().getImagemFundo(), getApplicationContext());
+        utils.setPic(fotoPlayer2, players[1].getPerfil().getImagemFundo(), getApplicationContext());
     }
 }
