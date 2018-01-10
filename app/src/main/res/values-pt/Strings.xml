@@ -5,7 +5,7 @@
     <string name="newGame">Novo Jogo</string>
     <string name="loadGame">Carregar Jogo</string>
     <string name="settings">Definições</string>
-    <string name="about">Sobre</string>
+    <string name="about">Creditos</string>
     <string name="leaderboards">Tabelas de liderança</string>
     <string name="profile">Perfil</string>
 
@@ -37,7 +37,7 @@
     <string name="sobre">Sobre</string>
     <string name="DevelopedBy">Desenvolvido por</string>
     <string name="developer1">Alexandre Protasio | 21230589</string>
-    <string name="developer2">João Leitão | 2125XXXX</string>
+    <string name="developer2">João Leitão | 21250715</string>
     <string name="msgToDeletePerfil">Are you sure you want to delete</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Ok</string>

@@ -77,7 +77,7 @@ public class PerfilActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    // quando se premite o botao "save" guarda perfil na lista de leaderboards -> NAO FUNCIONA
+    // quando se premite o botao "save" guarda perfil na lista de leaderboards
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int str = R.string.perfil_invalido;

@@ -10,23 +10,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#0073ff">
+
+        <ImageView
+            android:id="@+id/fotoPlayer1"
+            android:layout_width="90sp"
+            android:layout_height="90sp"
+            android:background="@drawable/user_icon"/>
 
         <TextView
             android:id="@+id/player1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:height="50sp"
-            android:background="#0073ff" />
-
-        <TextView
-            android:id="@+id/player2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:height="50sp"
-            android:background="#007300" />
+            android:height="100sp"
+            android:background="#0073ff"
+            android:text="JOGADOR 1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -34,5 +38,32 @@
         android:id="@+id/BoardContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#007300">
+
+        <ImageView
+            android:id="@+id/fotoPlayer2"
+            android:layout_width="90sp"
+            android:layout_height="90sp"
+            android:background="@drawable/user_icon"/>
+
+        <TextView
+            android:id="@+id/player2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:height="100sp"
+            android:background="#007300"
+            android:text="JOGADOR 2"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
 
 </LinearLayout>
