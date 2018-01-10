@@ -1,13 +1,23 @@
 package com.isec.alex_joao.amov_tp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.isec.alex_joao.amov_tp.Chess.Chess;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,6 +37,32 @@ public class LeaderboardsActivity extends Activity {
         lstView = (ListView) findViewById(R.id.lstPerfis);
         adapter = new LeaderboardsAdapter(getApplicationContext(), ChessApp.perfis);
         lstView.setAdapter(adapter);
+        lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                AlertDialog.Builder adb=new AlertDialog.Builder(LeaderboardsActivity.this);
+                adb.setTitle("Delete?");
+                adb.setMessage(getString(R.string.msgToDeletePerfil)+ "\""
+                        + ChessApp.perfis.get(i).getStrNome()+ "\"");
+                adb.setNegativeButton(R.string.cancel, null);
+                adb.setPositiveButton(R.string.confirm, new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Perfil perfil = ChessApp.perfis.remove(i);
+                        File pictureFile = new File(perfil.getImagemFundo());
+                        if(!pictureFile.delete())
+                            Log.d("files", "Erro ao apagar imagem");
+                        adapter.notifyDataSetChanged();
+                    }});
+                adb.show();
+                return false;
+            }
+        });
     }
 
 
