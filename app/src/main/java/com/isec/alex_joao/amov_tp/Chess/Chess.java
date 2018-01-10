@@ -7,6 +7,10 @@ import com.isec.alex_joao.amov_tp.Chess.Pieces.Pawn;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Queen;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Rook;
+import com.isec.alex_joao.amov_tp.Chess.Players.BotPlayer;
+import com.isec.alex_joao.amov_tp.Chess.Players.LocalPlayer;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
+import com.isec.alex_joao.amov_tp.Chess.Players.RemotePlayer;
 
 import java.io.Serializable;
 
@@ -18,6 +22,7 @@ public class Chess implements Serializable {
     public static final int OneVsOneNetworkServer = 4;
     public static final int OneVsOneNetworkClient = 5;
     private Player[] players;
+    private Player winner;
     private Board board;
     private Player jogadorAtual;
     private boolean end;
@@ -27,10 +32,26 @@ public class Chess implements Serializable {
     }
 
     public Chess(int type) {
+
+        winner = null;
         end = false;
         players = new Player[2];
-        jogadorAtual = players[0] = new Player(0, new Coord(0, 1));
-        players[1] = new Player(1, new Coord(0, -1));
+
+        if (type == OneVsOneNetworkClient) {
+            players[0] = new RemotePlayer(0, new Coord(0, 1),this);
+            players[1] = new LocalPlayer(1, new Coord(0, -1),this);
+        }
+        if (type == OneVsOneNetworkServer) {
+            players[0] = new LocalPlayer(0, new Coord(0, 1),this);
+            players[1] = new RemotePlayer(1, new Coord(0, -1),this);
+        } else {
+            players[0] = new LocalPlayer(0, new Coord(0, 1),this);
+            if (type == OneVsPhone)
+                players[1] = new BotPlayer(1, new Coord(0, -1),this);
+            else if (type == OneVsOne)
+                players[1] = new LocalPlayer(1, new Coord(0, -1),this);
+        }
+        jogadorAtual = players[0];
         board = new Board(new Coord(8, 8), this);
         initBoard();
     }
@@ -45,21 +66,21 @@ public class Chess implements Serializable {
 
     public void initBoard() {
         for (int j = 0; j < 2; j++) {
-            players[j].addPiece(new Rook(players[j],board));
-            players[j].addPiece(new Knight(players[j],board));
-            players[j].addPiece(new Bishop(players[j],board));
+            players[j].addPiece(new Rook(players[j], board));
+            players[j].addPiece(new Knight(players[j], board));
+            players[j].addPiece(new Bishop(players[j], board));
             if (j == 0) {
-                players[j].addPiece(new Queen(players[j],board));
-                players[j].addPiece(new King(players[j],board));
+                players[j].addPiece(new Queen(players[j], board));
+                players[j].addPiece(new King(players[j], board));
             } else if (j == 1) {
-                players[j].addPiece(new King(players[j],board));
-                players[j].addPiece(new Queen(players[j],board));
+                players[j].addPiece(new King(players[j], board));
+                players[j].addPiece(new Queen(players[j], board));
             }
-            players[j].addPiece(new Bishop(players[j],board));
-            players[j].addPiece(new Knight(players[j],board));
-            players[j].addPiece(new Rook(players[j],board));
+            players[j].addPiece(new Bishop(players[j], board));
+            players[j].addPiece(new Knight(players[j], board));
+            players[j].addPiece(new Rook(players[j], board));
             for (int i = 0; i < 8; i++)
-                players[j].addPiece(new Pawn(players[j],board));
+                players[j].addPiece(new Pawn(players[j], board));
         }
         board.initBoard(players);
     }
@@ -72,22 +93,40 @@ public class Chess implements Serializable {
         }
         jogadorAtual.tick();
         board.removeSelected();
+        if (!(jogadorAtual instanceof LocalPlayer)) {
+            Jogada jog = jogadorAtual.play();
+            joga(jog);
+        }
     }
 
     public Piece getSelected() {
         return board.getSelected();
     }
 
-    public boolean setSelected(Coord pos) {
-        if(end)
+    public boolean joga(Jogada jog) {
+        if (end || jog != null)
             return false;
-        int i = board.setSelected(pos, jogadorAtual);
-        if (i == Board.NEXTPLAYER) {
-            nextPlayer();
-        }
-        if (i == Board.WRONGPLAYER)
-            return false;
+        board.setSelected(jog.getCoord1(), jogadorAtual);
+        board.setSelected(jog.getCoord2(), jogadorAtual);
+        nextPlayer();
         return true;
+    }
+
+    public boolean setSelected(Coord pos) {
+        if (jogadorAtual instanceof LocalPlayer) {
+            if (end)
+                return false;
+            int i = board.setSelected(pos, jogadorAtual);
+            if (i == Board.NEXTPLAYER) {
+                nextPlayer();
+            }
+            if (i == Board.WRONGPLAYER)
+                return false;
+            return true;
+        } else
+            return false;
+
+
     }
 
     public Player getOtherPlayer() {
@@ -106,9 +145,19 @@ public class Chess implements Serializable {
         return board.getSelected() != null;
     }
 
-    public void endGame(Player otherPlayer) {
-        otherPlayer.win();
+    public void endGame(Player player) {
+        winner = player;
+        winner.win();
+        if (winner == players[0])
+            players[1].lose();
+        else {
+            players[0].lose();
+        }
         end = true;
+    }
+
+    public Player getWinner() {
+        return winner;
     }
 
     public boolean isEnd() {

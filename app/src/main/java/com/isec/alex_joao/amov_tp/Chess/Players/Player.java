@@ -1,28 +1,35 @@
-package com.isec.alex_joao.amov_tp.Chess;
+package com.isec.alex_joao.amov_tp.Chess.Players;
 
+import com.isec.alex_joao.amov_tp.Chess.Chess;
+import com.isec.alex_joao.amov_tp.Chess.Coord;
+import com.isec.alex_joao.amov_tp.Chess.Jogada;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.King;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
 import com.isec.alex_joao.amov_tp.Perfil;
 
 import java.io.Serializable;
-import java.net.Socket;
 import java.util.ArrayList;
 
-public class Player implements Serializable {
+public abstract class Player implements Serializable {
     ArrayList<Piece> pieces;
     int id;
-    Socket des;
     private Coord dir;
     private String name;
     private King king;
     private Perfil perfil;
+    private Chess game;
 
-    public Player(int id, Coord dir) {
+    public Player(int id, Coord dir, Perfil perfil, Chess game) {
+        this.game = game;
         this.id = id;
         pieces = new ArrayList<>();
         this.dir = dir;
         king = null;
-        perfil = null;
+        this.perfil = perfil;
+    }
+
+    public Player(int id, Coord dir,Chess game) {
+        this(id, dir, new Perfil("Android", ""),game);
     }
 
     public Perfil getPerfil() {
@@ -30,7 +37,9 @@ public class Player implements Serializable {
     }
 
     public void setPerfil(Perfil perfil) {
-        this.perfil = perfil;
+        if (perfil != null)
+            this.perfil = perfil;
+
     }
 
     public Piece getKing() {
@@ -78,7 +87,14 @@ public class Player implements Serializable {
     }
 
     public void win() {
-        if(perfil != null)
+        if (perfil != null)
             perfil.addWin();
     }
+
+    public void lose() {
+        if (perfil != null)
+            perfil.addDefeats();
+    }
+
+    public abstract Jogada play();
 }

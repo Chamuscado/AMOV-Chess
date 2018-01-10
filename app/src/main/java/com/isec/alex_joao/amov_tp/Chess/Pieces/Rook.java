@@ -2,11 +2,10 @@ package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.Board;
 import com.isec.alex_joao.amov_tp.Chess.Coord;
-import com.isec.alex_joao.amov_tp.Chess.Player;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Rook extends Piece implements Serializable {

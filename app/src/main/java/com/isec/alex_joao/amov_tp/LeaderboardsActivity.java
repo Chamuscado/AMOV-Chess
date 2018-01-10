@@ -1,9 +1,12 @@
 package com.isec.alex_joao.amov_tp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +37,11 @@ public class LeaderboardsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboards);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1234);
+        }
+
         lstView = (ListView) findViewById(R.id.lstPerfis);
         adapter = new LeaderboardsAdapter(getApplicationContext(), ChessApp.perfis);
         lstView.setAdapter(adapter);
@@ -54,6 +62,7 @@ public class LeaderboardsActivity extends Activity {
                 adb.setPositiveButton(R.string.confirm, new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Perfil perfil = ChessApp.perfis.remove(i);
+                        ChessApp.savePerfis(getApplicationContext());
                         File pictureFile = new File(perfil.getImagemFundo());
                         if(!pictureFile.delete())
                             Log.d("files", "Erro ao apagar imagem");

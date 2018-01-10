@@ -58,4 +58,6 @@ public class LeaderboardsAdapter extends BaseAdapter {
 
         return view;
     }
+
+
 }

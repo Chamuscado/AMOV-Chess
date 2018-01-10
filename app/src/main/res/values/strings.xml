@@ -37,6 +37,9 @@
     <string name="DevelopedBy">Developed by</string>
     <string name="developer1">Alexandre Protasio | 21230589</string>
     <string name="developer2">João Leitão | 2125XXXX</string>
+    <string name="msgToDeletePerfil">Are you sure you want to delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Ok</string>
 
 
 </resources>

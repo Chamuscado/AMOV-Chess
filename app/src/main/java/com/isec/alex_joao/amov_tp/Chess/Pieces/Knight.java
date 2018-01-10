@@ -1,6 +1,7 @@
 package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.*;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class Knight extends Piece implements Serializable {
 
-    public Knight(Player player,Board board) {
+    public Knight(Player player, Board board) {
         super(player,board);
     }
 

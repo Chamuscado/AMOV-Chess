@@ -7,6 +7,7 @@ import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,6 +48,7 @@ public class PerfilActivity extends Activity {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
+
 
         if (cameraExist()) {
             try {

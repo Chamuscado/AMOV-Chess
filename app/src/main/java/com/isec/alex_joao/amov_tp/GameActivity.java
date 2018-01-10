@@ -1,7 +1,6 @@
 package com.isec.alex_joao.amov_tp;
 
 import android.app.Activity;
-
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -13,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -27,9 +27,6 @@ import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.net.UnknownHostException;
-
-import javax.net.ssl.HandshakeCompletedEvent;
 
 public class GameActivity extends Activity implements BoardFragment.OnFragmentInteractionListener {
     private static final int PORT = 5000;
@@ -59,6 +56,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         handle = new Handler();
 
     }
+
 
     @Override
     protected void onResume() {
@@ -126,6 +124,17 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         //ChessApp.game = (Chess) savedInstanceState.getSerializable("game");
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (ChessApp.game.isEnd()) {
+            Toast.makeText(act, "Fim do jogo!! " + System.lineSeparator()
+                    + ChessApp.game.getWinner().getPerfil().getStrNome()
+                    + " ganhou", Toast.LENGTH_LONG).show();
+            finish();
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void startServer() {
         MulticastSocket multicastSocket = null;
         try {
@@ -179,7 +188,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                         waiting.dismiss();
                         if (ChessApp.gameSocket == null)
                             finish();
-                        Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        //Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
                     }
                 });
@@ -244,7 +253,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                         waiting.dismiss();
                         if (ChessApp.gameSocket == null)
                             finish();
-                        Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
+                        // Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
                     }
                 });

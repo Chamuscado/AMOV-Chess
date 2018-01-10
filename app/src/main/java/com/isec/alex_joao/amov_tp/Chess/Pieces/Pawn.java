@@ -1,6 +1,7 @@
 package com.isec.alex_joao.amov_tp.Chess.Pieces;
 
 import com.isec.alex_joao.amov_tp.Chess.*;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ public class Pawn extends Piece implements Serializable {
 
     private boolean doubleSquare;
 
-    public Pawn(Player player,Board board) {
+    public Pawn(Player player, Board board) {
         super(player,board);
         doubleSquare = false;
     }

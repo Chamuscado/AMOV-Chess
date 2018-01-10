@@ -37,8 +37,12 @@ public class ChessApp extends Application {
         ChessApp.context = context;
     }
 
-    public static void setPerfil(Perfil perfil) {
-        perfilSelecionado = perfil;
+    public static Perfil getPerfilSelecionado() {
+        return perfilSelecionado;
+    }
+
+    public static void setPerfilSelecionado(Perfil perfilSelecionado) {
+        ChessApp.perfilSelecionado = perfilSelecionado;
     }
 
     public static void savePerfis(Context context) {

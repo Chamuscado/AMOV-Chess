@@ -1,6 +1,9 @@
 package com.isec.alex_joao.amov_tp.Chess;
 
+import com.isec.alex_joao.amov_tp.Chess.Pieces.King;
 import com.isec.alex_joao.amov_tp.Chess.Pieces.Piece;
+import com.isec.alex_joao.amov_tp.Chess.Players.LocalPlayer;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,39 +26,41 @@ public class Board implements Serializable {
         selected = null;
     }
 
-    public int setSelected(Coord pos, Player player) {            //TODO -> este metodo está todo fodido
+    public int setSelected(Coord pos, Player player) {
         int resp = SAMEPLAYER;
-        Piece p;
-        List<Coord> list = null;
-        try {
-            p = getPieceAt(pos.X, pos.Y);
-        } catch (IllegalArgumentException ex) {
-            p = null;
+            Piece p;
+            List<Coord> list = null;
+            try {
+                p = getPieceAt(pos.X, pos.Y);
+            } catch (IllegalArgumentException ex) {
+                p = null;
+            }
+            if (selected != null)
+                list = selected.getDesloc();
+
+            if (p != null)                                            // verificar se a peça é do jogador
+            {
+                Player player2 = p.getPlayer();
+                if (player2 == player) {                   //muda a peça selecionada
+                    selected = p;
+                } else if (list != null)
+                    if (list.contains(pos)) {                           //verifica se é uma jogada valida
+                        if (getPieceAt(pos) instanceof King) {
+                            game.endGame(player2);
+                        }
+                        removeDefinitelyPieceAt(pos);                     //comer a peça
+                        selected.moveTo(this, pos);
+                        resp = NEXTPLAYER;
+                    }
+
+            } else { // movimento simples ( sem comer)
+
+                if (list != null)
+                    if (list.contains(pos)) {
+                        selected.moveTo(this, pos);//moveTo(pos);
+                        resp = NEXTPLAYER;
+                    }
         }
-        if (selected != null)
-            list = selected.getDesloc();
-
-        if (p != null)                                            //TODO -> verificar se a peça é do jogador
-        {
-            Player player2 = p.getPlayer();
-            if (player2 == player) {                   //muda a peça selecionada
-                selected = p;
-            } else if (list != null)
-                if (list.contains(pos)) {                           //verifica se é uma jogada valida
-                    removeDefinitelyPieceAt(pos);                     //comer a peça
-                    selected.moveTo(this, pos);
-                    resp = NEXTPLAYER;
-                }
-
-        } else { // movimento simples ( sem comer)
-
-            if (list != null)
-                if (list.contains(pos)) {
-                    selected.moveTo(this, pos);//moveTo(pos);
-                    resp = NEXTPLAYER;
-                }
-        }
-
         return resp;
     }
 
