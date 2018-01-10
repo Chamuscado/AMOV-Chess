@@ -36,13 +36,6 @@
             android:textSize="20dp"
             android:onClick="onCapturarImagem"/>
 
-        <Button
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:text="@string/changeCamera"
-            android:onClick="onChangeCamara"/>
 
         <FrameLayout
             android:background="@color/photo_background"

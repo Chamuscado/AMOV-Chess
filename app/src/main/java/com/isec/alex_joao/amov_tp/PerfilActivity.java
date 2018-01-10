@@ -144,15 +144,7 @@ public class PerfilActivity extends Activity {
         camera.takePicture(null, null, takePhoto);
     }
 
-    /*
-        @Override
-        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-            if (requestCode == 20 && resultCode == RESULT_OK) {
-                utils.setPic(imagePreview, imageFilePath);
-            }
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    */
+
     public boolean cameraExist() {
         if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
             return true;
@@ -160,28 +152,6 @@ public class PerfilActivity extends Activity {
             return false;
     }
 
-    public void onChangeCamara(View view) { // TODO -> fata implementar o onChangeCamara
-     /*   Camera.CameraInfo info = new Camera.CameraInfo();
-        int n = Camera.getNumberOfCameras();
-        Camera.getCameraInfo();
-        for (int i = 0; i < n; ++i) {
-            if (n > 1) {
-                int c = info.facing;
-                if (c == Camera.CameraInfo.CAMERA_FACING_BACK)
-                    c = Camera.CameraInfo.CAMERA_FACING_FRONT;
-                else {
-                    c = Camera.CameraInfo.CAMERA_FACING_BACK;
-                }
-                info.facing = c;
 
-            }
-
-            Camera.CameraInfo CI = new Camera.CameraInfo();
-            Camera.getCameraInfo(i, CI);
-            if (CI.facing == Camera.CameraInfo.CAMERA_FACING_FRONT)
-                frontCameraIndex = i;
-        }
-        */
-    }
 }
 
