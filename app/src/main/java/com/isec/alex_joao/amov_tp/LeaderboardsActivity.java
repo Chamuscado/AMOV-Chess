@@ -16,12 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.isec.alex_joao.amov_tp.Chess.Chess;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
 
 /**
  * Created by alex_ on 23/12/2017.
@@ -48,26 +43,27 @@ public class LeaderboardsActivity extends Activity {
         lstView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                ChessApp.perfilSelecionado = ChessApp.perfis.get(i);
             }
         });
         lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                AlertDialog.Builder adb=new AlertDialog.Builder(LeaderboardsActivity.this);
+                AlertDialog.Builder adb = new AlertDialog.Builder(LeaderboardsActivity.this);
                 adb.setTitle("Delete?");
-                adb.setMessage(getString(R.string.msgToDeletePerfil)+ "\""
-                        + ChessApp.perfis.get(i).getStrNome()+ "\"");
+                adb.setMessage(getString(R.string.msgToDeletePerfil) + "\""
+                        + ChessApp.perfis.get(i).getStrNome() + "\"");
                 adb.setNegativeButton(R.string.cancel, null);
                 adb.setPositiveButton(R.string.confirm, new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Perfil perfil = ChessApp.perfis.remove(i);
                         ChessApp.savePerfis(getApplicationContext());
                         File pictureFile = new File(perfil.getImagemFundo());
-                        if(!pictureFile.delete())
+                        if (!pictureFile.delete())
                             Log.d("files", "Erro ao apagar imagem");
                         adapter.notifyDataSetChanged();
-                    }});
+                    }
+                });
                 adb.show();
                 return false;
             }

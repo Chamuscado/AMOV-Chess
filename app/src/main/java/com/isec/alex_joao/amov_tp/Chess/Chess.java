@@ -11,6 +11,7 @@ import com.isec.alex_joao.amov_tp.Chess.Players.BotPlayer;
 import com.isec.alex_joao.amov_tp.Chess.Players.LocalPlayer;
 import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 import com.isec.alex_joao.amov_tp.Chess.Players.RemotePlayer;
+import com.isec.alex_joao.amov_tp.ChessApp;
 
 import java.io.Serializable;
 
@@ -38,18 +39,18 @@ public class Chess implements Serializable {
         players = new Player[2];
 
         if (type == OneVsOneNetworkClient) {
-            players[0] = new RemotePlayer(0, new Coord(0, 1),this);
-            players[1] = new LocalPlayer(1, new Coord(0, -1),this);
+            players[0] = new RemotePlayer(0, new Coord(0, 1), this);
+            players[1] = new LocalPlayer(1, new Coord(0, -1), ChessApp.perfilSelecionado, this);
         }
         if (type == OneVsOneNetworkServer) {
-            players[0] = new LocalPlayer(0, new Coord(0, 1),this);
-            players[1] = new RemotePlayer(1, new Coord(0, -1),this);
+            players[0] = new LocalPlayer(0, new Coord(0, 1), ChessApp.perfilSelecionado, this);
+            players[1] = new RemotePlayer(1, new Coord(0, -1), this);
         } else {
-            players[0] = new LocalPlayer(0, new Coord(0, 1),this);
+            players[0] = new LocalPlayer(0, new Coord(0, 1), ChessApp.perfilSelecionado, this);
             if (type == OneVsPhone)
-                players[1] = new BotPlayer(1, new Coord(0, -1),this);
+                players[1] = new BotPlayer(1, new Coord(0, -1), this);
             else if (type == OneVsOne)
-                players[1] = new LocalPlayer(1, new Coord(0, -1),this);
+                players[1] = new LocalPlayer(1, new Coord(0, -1), ChessApp.perfilSelecionado, this);
         }
         jogadorAtual = players[0];
         board = new Board(new Coord(8, 8), this);
@@ -104,7 +105,7 @@ public class Chess implements Serializable {
     }
 
     public boolean joga(Jogada jog) {
-        if (end || jog != null)
+        if (end || jog == null)
             return false;
         board.setSelected(jog.getCoord1(), jogadorAtual);
         board.setSelected(jog.getCoord2(), jogadorAtual);
@@ -162,5 +163,15 @@ public class Chess implements Serializable {
 
     public boolean isEnd() {
         return end;
+    }
+
+    public void removeRemote() {
+        for (int i = 0; i < players.length; i++)
+            if (players[i] instanceof RemotePlayer)
+                players[i] = new BotPlayer(players[i]);
+    }
+
+    public Player[] getplayeres() {
+        return players;
     }
 }

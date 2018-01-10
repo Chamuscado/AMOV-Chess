@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AMOV-TP.iml" filepath="$PROJECT_DIR$/.idea/AMOV-TP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AMOV-TP.iml" filepath="$PROJECT_DIR$/AMOV-TP.iml" />
       <module fileurl="file://E:\Android\AMOV-TP\AMOV-TP\.idea\AMOV-TP.iml" filepath="E:\Android\AMOV-TP\AMOV-TP\.idea\AMOV-TP.iml" />
       <module fileurl="file://C:\Users\alex_\Desktop\ISEC\1718\SEM1\3ANO\AMOV\TP\chamuscas\1001\AMOV-TP\AMOV-TP.iml" filepath="C:\Users\alex_\Desktop\ISEC\1718\SEM1\3ANO\AMOV\TP\chamuscas\1001\AMOV-TP\AMOV-TP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

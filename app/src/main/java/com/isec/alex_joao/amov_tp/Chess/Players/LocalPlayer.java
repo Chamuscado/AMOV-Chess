@@ -11,12 +11,17 @@ import com.isec.alex_joao.amov_tp.Perfil;
 
 public class LocalPlayer extends Player {
 
+
     public LocalPlayer(int id, Coord dir, Perfil perfil, Chess game) {
         super(id, dir, perfil, game);
     }
 
     public LocalPlayer(int id, Coord dir, Chess game) {
         super(id, dir, game);
+    }
+
+    public LocalPlayer(Player player) {
+        super(player);
     }
 
     @Override

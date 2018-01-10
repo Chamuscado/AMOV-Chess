@@ -16,7 +16,7 @@ import android.widget.ImageView;
 
 public class utils {
 
-    public static void setPic(final ImageView mImageView, final String mCurrentPhotoPath) {
+    public static void setPic(final ImageView mImageView, final String mCurrentPhotoPath, final Context context) {
 
 
         mImageView.post(new Runnable() {
@@ -42,6 +42,9 @@ public class utils {
                 bmOptions.inPurgeable = true;
 
                 Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+                if (bitmap == null) {
+                    bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.user_icon);
+                }
                 mImageView.setImageBitmap(bitmap); //em alternativa retornar apenas o Bitmap
             }
         });

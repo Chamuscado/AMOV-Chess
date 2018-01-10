@@ -16,8 +16,7 @@
         <ImageView
             android:id="@+id/fotoPlayer1"
             android:layout_width="90sp"
-            android:layout_height="90sp"
-            android:background="@drawable/user_icon"/>
+            android:layout_height="90sp" />
 
         <TextView
             android:id="@+id/player1"
@@ -49,7 +48,7 @@
             android:id="@+id/fotoPlayer2"
             android:layout_width="90sp"
             android:layout_height="90sp"
-            android:background="@drawable/user_icon"/>
+           />
 
         <TextView
             android:id="@+id/player2"

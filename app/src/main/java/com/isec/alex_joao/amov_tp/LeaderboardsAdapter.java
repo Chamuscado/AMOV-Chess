@@ -53,7 +53,7 @@ public class LeaderboardsAdapter extends BaseAdapter {
         tvName.setText(perfil.getStrNome());
         tvData.setText(context.getString(R.string.wins) + perfil.getWins()
                 + context.getString(R.string.defeats) + perfil.getDefeats());
-        utils.setPic(imageView, perfil.getImagemFundo());
+        utils.setPic(imageView, perfil.getImagemFundo(),context);
 
 
         return view;

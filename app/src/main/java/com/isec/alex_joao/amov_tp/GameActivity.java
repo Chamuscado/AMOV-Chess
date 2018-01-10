@@ -15,9 +15,12 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.isec.alex_joao.amov_tp.Chess.Chess;
+import com.isec.alex_joao.amov_tp.Chess.Players.Player;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -35,7 +38,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
     private static final String MSGCONT = "JoinGame";
     private static final String groupMCS = "230.30.30.30";
 
-    BoardFragment boardFragment;rrr
+    BoardFragment boardFragment;
     ProgressDialog waiting;
     Handler handle;
     int mode;
@@ -50,7 +53,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         Intent intent = getIntent();
         if (intent != null) {
             mode = intent.getIntExtra("mode", Chess.OneVsOne);
-            if (mode != Chess.ContinueGame)
+            if (mode != Chess.ContinueGame && mode != Chess.OneVsOneNetwork)
                 ChessApp.game = new Chess(mode);
         }
         handle = new Handler();
@@ -177,7 +180,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                 finalMulticastSocket.close();
                 InetAddress add = datagram.getAddress();
                 try {
-                    ChessApp.gameSocket = new Socket(add, PORT);
+                    ChessApp.setGameSocket(new Socket(add, PORT));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -186,7 +189,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                     @Override
                     public void run() {
                         waiting.dismiss();
-                        if (ChessApp.gameSocket == null)
+                        if (ChessApp.getGameSocket() == null)
                             finish();
                         //Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
@@ -241,17 +244,18 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
                     do {
                         try {
                             finalSocket.send(finalDatagram);
-                            ChessApp.gameSocket = serverSocket.accept();
+                            Socket socket1 = serverSocket.accept();
+                            ChessApp.setGameSocket(socket1);
                         } catch (IOException e) {
 
                         }
-                    } while (ChessApp.gameSocket == null && !finalSocket.isClosed());
+                    } while (ChessApp.getGameSocket() == null && !finalSocket.isClosed());
                 }
                 handle.post(new Runnable() {
                     @Override
                     public void run() {
                         waiting.dismiss();
-                        if (ChessApp.gameSocket == null)
+                        if (ChessApp.getGameSocket() == null)
                             finish();
                         // Toast.makeText(act, "Server iniciado com sucesso status: " + ChessApp.gameSocket.getRemoteSocketAddress(), Toast.LENGTH_LONG).show(); // TODO -> debug
                         startFragment();
@@ -267,5 +271,17 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.BoardContainer, boardFragment);
         fragmentTransaction.commit();
+
+        ImageView fotoPlayer1 = (ImageView) findViewById(R.id.fotoPlayer1);
+        ImageView fotoPlayer2 = (ImageView) findViewById(R.id.fotoPlayer2);
+        TextView player1 = (TextView) findViewById(R.id.player1);
+        TextView player2 = (TextView) findViewById(R.id.player2);
+
+        Player[] players = ChessApp.game.getplayeres();
+        player1.setText(players[0].getPerfil().getStrNome());
+        player2.setText(players[1].getPerfil().getStrNome());
+
+        utils.setPic(fotoPlayer1, players[0].getPerfil().getImagemFundo(),getApplicationContext());
+        utils.setPic(fotoPlayer2, players[1].getPerfil().getImagemFundo(),getApplicationContext());
     }
 }

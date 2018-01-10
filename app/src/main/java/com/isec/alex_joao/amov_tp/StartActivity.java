@@ -29,6 +29,11 @@ public class StartActivity extends Activity {
         Button OneVsOne = (Button) view1.findViewById(R.id.OneVsOne);
         Button OneVsOneNetwork = (Button) view1.findViewById(R.id.OneVsOneNetwork);
 
+        if(ChessApp.perfilSelecionado == null){
+            Toast.makeText(this, R.string.unselectPerfil, Toast.LENGTH_LONG).show();
+            return;
+        }
+
         final Activity act = this;
 
         OneVsPhone.setOnClickListener(new View.OnClickListener() {

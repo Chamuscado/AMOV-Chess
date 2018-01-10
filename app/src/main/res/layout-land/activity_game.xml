@@ -4,20 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context="com.isec.alex_joao.amov_tp.GameActivity">
+    tools:context="com.isec.alex_joao.amov_tp.GameActivity"
+    android:orientation="horizontal">
 
 
     <LinearLayout
-        android:layout_width="100sp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:background="#0073ff"
         android:orientation="vertical"
-        android:background="#0073ff">
+        android:layout_weight="1">
 
         <ImageView
+            android:padding="10sp"
             android:id="@+id/fotoPlayer1"
             android:layout_width="90sp"
             android:layout_height="90sp"
-            android:background="@drawable/user_icon"/>
+            android:layout_gravity="center_horizontal"
+            />
 
         <TextView
             android:id="@+id/player1"
@@ -27,11 +31,11 @@
             android:layout_weight="1"
             android:height="100sp"
             android:background="#0073ff"
-            android:text="JOGADOR 1"
-            android:textStyle="bold"
             android:gravity="center"
+            android:text="JOGADOR 1"
             android:textAlignment="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -46,16 +50,18 @@
         android:baselineAligned="false" />
 
     <LinearLayout
-        android:layout_width="300sp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:background="#007300"
         android:orientation="vertical"
-        android:background="#007300">
+        android:layout_weight="1">
 
         <ImageView
+            android:padding="10sp"
             android:id="@+id/fotoPlayer2"
             android:layout_width="90sp"
             android:layout_height="90sp"
-            android:background="@drawable/user_icon"/>
+            android:layout_gravity="center_horizontal"/>
 
         <TextView
             android:id="@+id/player2"
@@ -64,14 +70,13 @@
             android:layout_weight="1"
             android:height="100sp"
             android:background="#007300"
-            android:text="JOGADOR 2"
-            android:textStyle="bold"
             android:gravity="center"
+            android:text="JOGADOR 2"
             android:textAlignment="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

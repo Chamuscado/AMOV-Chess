@@ -24,6 +24,10 @@ public class BotPlayer extends Player {
         super(id, dir, game);
     }
 
+    public BotPlayer(Player player) {
+        super(player);
+    }
+
     @Override
     public Jogada play() {
         Coord coord1;

@@ -25,11 +25,23 @@ public abstract class Player implements Serializable {
         pieces = new ArrayList<>();
         this.dir = dir;
         king = null;
-        this.perfil = perfil;
+        if (perfil != null)
+            this.perfil = perfil;
+        else
+            this.perfil = new Perfil("Android", "");
     }
 
-    public Player(int id, Coord dir,Chess game) {
-        this(id, dir, new Perfil("Android", ""),game);
+    public Player(int id, Coord dir, Chess game) {
+        this(id, dir, null, game);
+    }
+
+    public Player(Player player) {
+        this.game = player.game;
+        this.id = player.id;
+        pieces = player.pieces;
+        this.dir = player.dir;
+        king = player.king;
+        perfil = new Perfil("Android", "");
     }
 
     public Perfil getPerfil() {
@@ -40,6 +52,10 @@ public abstract class Player implements Serializable {
         if (perfil != null)
             this.perfil = perfil;
 
+    }
+
+    public Chess getGame() {
+        return game;
     }
 
     public Piece getKing() {

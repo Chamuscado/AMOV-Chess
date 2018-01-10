@@ -23,11 +23,27 @@ import java.util.List;
 
 public class ChessApp extends Application {
     private static final String PERFIS = "perfis.dat";
-    public static Socket gameSocket;
     public static Chess game;
     public static Perfil perfilSelecionado;
     public static List<Perfil> perfis;
+    public static ObjectInputStream in;
+    public static ObjectOutputStream out;
+    private static Socket gameSocket;
     private static Context context;
+
+    public static Socket getGameSocket() {
+        return gameSocket;
+    }
+
+    public static void setGameSocket(Socket gameSocket) {
+        ChessApp.gameSocket = gameSocket;
+
+        try {
+            in = new ObjectInputStream(ChessApp.gameSocket.getInputStream());
+            out = new ObjectOutputStream(ChessApp.gameSocket.getOutputStream());
+        } catch (IOException e) {
+        }
+    }
 
     public static Context getContext() {
         return context;
@@ -100,6 +116,16 @@ public class ChessApp extends Application {
     public static void addPerfil(Perfil perfil, Context context) {
         perfis.add(perfil);
         savePerfis(context);
+    }
+
+    public static void endSocket() {
+        try {
+            gameSocket.close();
+            out.close();
+            in.close();
+            game.removeRemote();
+        } catch (IOException e) {
+        }
     }
 
     @Override
