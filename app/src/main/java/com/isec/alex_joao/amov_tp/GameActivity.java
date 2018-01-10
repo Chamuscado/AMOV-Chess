@@ -35,7 +35,7 @@ public class GameActivity extends Activity implements BoardFragment.OnFragmentIn
     private static final String MSGCONT = "JoinGame";
     private static final String groupMCS = "230.30.30.30";
 
-    BoardFragment boardFragment;
+    BoardFragment boardFragment;rrr
     ProgressDialog waiting;
     Handler handle;
     int mode;
